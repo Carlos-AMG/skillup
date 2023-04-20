@@ -1,6 +1,4 @@
-
-  @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
 
 :root {
     --main-bg-color: #093545;
@@ -8,22 +6,38 @@
     --third-color: white;
     --forth-color:black;
     --font-family:'Lexend Deca', sans-serif;
+}
 
-  }
-
-*{
-    background-color: var(--main-bg-color);
+* {
     font-family: var(--font-family);
-} 
+}
+
+body, html {
+    height: 100%;
+    background-color: var(--main-bg-color);
+}
 
 #title {
     color: var(--third-color);
-    
 }
 
-
-
-#title span{
+#title span {
     background-color: var(--secondary-color);
-    
+    border-radius: 17%;
 }
+
+
+main{
+    text-align: center;
+}
+
+h4 {
+    background-color: var(--secondary-color);
+}
+
+.option{
+    background-color: #20df7f;
+    color:var(--third-color);
+    text-decoration: none;
+}
+
