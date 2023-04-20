@@ -1,0 +1,17 @@
+doctype html 
+html 
+    head 
+        title
+    body
+        include ../partials/logo
+        h1 Sign in
+        p Sign in and find your future
+        form(action=`/${name}/login` method='post')
+            label Email:
+            input(type='email' name='email' required='')
+            
+            label Contrase&ntilde;a:
+            input(type='password' name='password' required='')
+            
+            button(type='submit') Sign in
+            a(href=`/${name}/signup`) Sign up  
