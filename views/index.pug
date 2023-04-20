@@ -1,19 +1,7 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Skill Up
-        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ' crossorigin='anonymous')
-        link(rel="stylesheet", href="/css/styles.css")
+include partials/_header
     body
         main
-            #title.container-fluid
-                .row.mt-3
-                    h1 SKILL
-                        span.rounded UP
-                    p Skill Up and get to the next level
+            include partials/logo
 
             #options.container-fluid
                 .row.justify-content-center

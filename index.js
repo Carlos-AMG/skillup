@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import studentRouter from './routes/student.js';
+import authRouter from './routes/auth.js';
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.set('view engine','pug')
 app.set('views','./views')
 
 app.get('/',(req,res) => res.render('index'))
-
+app.use("/", authRouter)
 
 app.get('/student',studentRouter);
 
