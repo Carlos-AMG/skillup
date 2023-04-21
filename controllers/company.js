@@ -1,24 +1,24 @@
-const logInStudent = (req,res)=>{
+const logInCompany= (req,res)=>{
     res.render('partials/login',{
-        type:"Students",
+        type:"Companies",
         pagina:"LogIn"
     })
 }
 
-const signUpStudent = (req,res)=>{
-    res.render('partials/signup',{
-        type:"Students",
+const signUpCompany = (req,res)=>{
+    res.render('partials/signupCompany',{
+        type:"Companies",
         pagina: 'SignUp'
     })
 }
 const formularioOlvidePassword = (req,res)=>{
     res.render('partials/olvide-password',{
-        type:"Students",
+        type:"Companies",
         pagina: 'Forgotten Password?'
     })
 }
 export{
-    logInStudent,
-    signUpStudent,
+    logInCompany,
+    signUpCompany,
     formularioOlvidePassword
 }

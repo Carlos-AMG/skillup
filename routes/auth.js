@@ -1,13 +1,13 @@
 import express from 'express'
-import { getCompanyLogin, getStudentLogin } from '../controllers/auth.cjs';
-// const {getStudentLogin} = require("../controllers/auth.cjs") 
-const authRouter = express.Router();
+import main from '../controllers/auth.js';
+
+const router = express.Router();
 
 
 
 
 //Render
-authRouter.get('/student/login', getStudentLogin)
-authRouter.get('/company/login', getCompanyLogin)
+router.get('/', main)
 
-export default authRouter;
+
+export default router;

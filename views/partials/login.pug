@@ -1,23 +1,32 @@
 extends ../layout/index
 
-block contenido           
-    div 
-    a(href="/")         
-        p.uppercase.font-bold.mt-5aSkill.mt-5 Up and go to the next level
-
+block contenido                    
+    p.uppercase.font-bold.mt-3 Skill Up and go to the next level 
+    h2.mt-5.text-2xl For 
+        span.font-extrabold #{type}
     .py-10 
-        h2.text-center.text-4xl.font-extrabold.text-green-500= pagina
+        h2.text-center.text-4xl.font-extrabold.text-green-500.mt-0= pagina
 
         .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
                 form(action="").space-y-5
                     div 
-                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Your Email
+                        if type==="Students"
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Your Email
+                        else 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Company Email
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Email" type="email" name="email") 
                     div 
-                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Your Password
+                        if type==="Students"
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Your Password
+                        else 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Company Password
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password")
                     .flex.items-center.justify-between 
-                        a.text-gray-500.text-xs(href="/student/signup") New to SkillUp? SignUp
-                        a.text-gray-500.text-xs(href="/student/olvide-password") Forgotten Password?
+                        if type==="Students"
+                            a.text-gray-500.text-xs(href="/student/signup") New to SkillUp? SignUp
+                            a.text-gray-500.text-xs(href="/student/olvide-password") Forgotten Password?
+                        else 
+                            a.text-gray-500.text-xs(href="/company/signup") New to SkillUp? SignUp
+                            a.text-gray-500.text-xs(href="/company/olvide-password") Forgotten Password?
                     input(type="submit" value="LogIn" class="w-full bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md")

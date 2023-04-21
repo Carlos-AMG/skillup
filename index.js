@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import studentRoutes from './routes/student.js';
+import companyRoutes from './routes/company.js'
 import authRouter from './routes/auth.js';
 
 const app = express();
@@ -23,11 +24,15 @@ app.set('views','./views')
 //Carpeta publica
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get('/',(req,res) => res.render('index'))
-// app.use("/", authRouter)
+
+app.use("/", authRouter);
+// app.get('/',authRouter)
 
 app.use('/student',studentRoutes)
 app.get('/student',studentRoutes);
+
+app.use('/company',companyRoutes)
+app.get('/company',companyRoutes);
 
 
 const PORT = process.env.PORT || 3000;
