@@ -1,10 +1,16 @@
 import express from 'express'
-const studentRouter = express.Router();
+import{
+    logInStudent,
+    signUpStudent,
+    formularioOlvidePassword
+} from '../controllers/student.js'
+
+const router = express.Router();
 
 
+router.get('/login',logInStudent)
+router.get('/signup',signUpStudent)
+router.get('/olvide-password',formularioOlvidePassword)
 
 
-//Render
-studentRouter.get('/profile',)
-
-export default studentRouter;
+export default router;
