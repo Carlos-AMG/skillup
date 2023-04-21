@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import studentRouter from './routes/student.js';
+import studentRoutes from './routes/student.js';
 import authRouter from './routes/auth.js';
 
 const app = express();
@@ -15,14 +15,19 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+//Habilitar Pug
+
 app.set('view engine','pug')
 app.set('views','./views')
 
-app.get('/',(req,res) => res.render('index'))
-app.use("/", authRouter)
+//Carpeta publica
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/student',studentRouter);
+// app.get('/',(req,res) => res.render('index'))
+// app.use("/", authRouter)
+
+app.use('/student',studentRoutes)
+app.get('/student',studentRoutes);
 
 
 const PORT = process.env.PORT || 3000;

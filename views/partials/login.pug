@@ -1,17 +1,21 @@
-doctype html 
-html 
-    head 
-        title
-    body
-        include ../partials/logo
-        h1 Sign in
-        p Sign in and find your future
-        form(action=`/${name}/login` method='post')
-            label Email:
-            input(type='email' name='email' required='')
-            
-            label Contrase&ntilde;a:
-            input(type='password' name='password' required='')
-            
-            button(type='submit') Sign in
-            a(href=`/${name}/signup`) Sign up  
+extends ../layout/index
+
+block contenido                    
+    p.uppercase.font-bold.mt-5 Skill Up and go to the next level
+
+    .py-10 
+        h2.text-center.text-4xl.font-extrabold.text-green-500= pagina
+
+        .mt-8.mx-auto.max-w-md
+            .bg-white.py-8.px-4.shadow
+                form(action="").space-y-5
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Your Email
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Email" type="email" name="email") 
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Your Password
+                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password")
+                    .flex.items-center.justify-between 
+                        a.text-gray-500.text-xs(href="/student/signup") New to SkillUp? SignUp
+                        a.text-gray-500.text-xs(href="/student/olvide-password") Forgotten Password?
+                    input(type="submit" value="LogIn" class="w-full bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md")

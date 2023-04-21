@@ -12,10 +12,10 @@
     font-family: var(--font-family);
 }
 
-body, html {
+/* body, html {
     height: 100%;
     background-color: var(--main-bg-color);
-}
+} */
 
 #title {
     color: var(--third-color);
