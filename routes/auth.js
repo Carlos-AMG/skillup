@@ -1,13 +1,15 @@
 import express from 'express'
-import main from '../controllers/auth.js';
+import {logIn,signUp,forgotPassword} from '../controllers/auth.js';
 
-const router = express.Router();
+const authRouter = express.Router();
 
 
 
 
 //Render
-router.get('/', main)
+authRouter.get('/:userType/login', logIn);
+authRouter.get('/:userType/signup', signUp);
+authRouter.get('/:userType/forgot-password', forgotPassword);
 
 
-export default router;
+export default authRouter;

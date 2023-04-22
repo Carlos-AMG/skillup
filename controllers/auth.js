@@ -1,15 +1,37 @@
-// exports.getStudentLogin = (req,res,next) => {
-//     res.render("partials/login", {name: "student"})
-// }
-
-// exports.getCompanyLogin = (req,res,next) => {
-//     res.render("partials/login", {name: "company"})
-// }
-
-const main = (req,res)=>{
-    res.render('layout/main',{
-        pagina:'Main'
+const logIn= (req,res)=>{
+    const type = req.params.userType; 
+    res.render('partials/login',{
+        type,
+        pagina:"LogIn"
     })
 }
 
-export default main
+const signUp = (req,res)=>{
+
+    const type = req.params.userType;
+    let singUpPage ;
+    if(type == "students"){
+        singUpPage = "signup"
+    }else{
+        singUpPage = "signupCompany"
+    }
+    res.render(`partials/${singUpPage}`,{
+        type,
+        pagina: 'SignUp'
+    })
+}
+const forgotPassword = (req,res)=>{
+    const type = req.params.userType;
+    res.render('partials/olvide-password',{
+        type,
+        pagina: 'Forgotten Password?'
+    })
+}
+
+export{
+    logIn,
+    signUp,
+    forgotPassword
+}
+
+

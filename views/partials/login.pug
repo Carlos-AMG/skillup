@@ -11,22 +11,18 @@ block contenido
             .bg-white.py-8.px-4.shadow
                 form(action="").space-y-5
                     div 
-                        if type==="Students"
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Your Email
-                        else 
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Company Email
+                        
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") #{type}  Email
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Email" type="email" name="email") 
                     div 
-                        if type==="Students"
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Your Password
-                        else 
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Company Password
+                        
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password")  #{type} Password
+                        
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password")
                     .flex.items-center.justify-between 
-                        if type==="Students"
-                            a.text-gray-500.text-xs(href="/student/signup") New to SkillUp? SignUp
-                            a.text-gray-500.text-xs(href="/student/olvide-password") Forgotten Password?
-                        else 
-                            a.text-gray-500.text-xs(href="/company/signup") New to SkillUp? SignUp
-                            a.text-gray-500.text-xs(href="/company/olvide-password") Forgotten Password?
+                        
+                        a.text-gray-500.text-xs(href=`/${type}/signup`) New to SkillUp? SignUp
+                        a.text-gray-500.text-xs(href=`/${type}/forgot-password`) Forgotten Password?
+
+                           
                     input(type="submit" value="LogIn" class="w-full bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md")

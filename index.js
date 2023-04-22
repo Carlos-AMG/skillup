@@ -24,15 +24,14 @@ app.set('views','./views')
 //Carpeta publica
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.get("/",(req,res) => res.render("layout/main"))
 app.use("/", authRouter);
 // app.get('/',authRouter)
 
-app.use('/student',studentRoutes)
-app.get('/student',studentRoutes);
+app.use('/students',studentRoutes)
 
-app.use('/company',companyRoutes)
-app.get('/company',companyRoutes);
+app.use('/companies',companyRoutes)
+
 
 
 const PORT = process.env.PORT || 3000;
