@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 import studentRoutes from './routes/student.js';
 import companyRoutes from './routes/company.js'
 import authRouter from './routes/auth.js';
-
+import session from 'express-session';
+import passport from './config/passport.js';
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,9 +16,11 @@ const __dirname = path.dirname(__filename);
 // Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'some-secret', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Habilitar Pug
-
 app.set('view engine','pug')
 app.set('views','./views')
 
@@ -26,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/",(req,res) => res.render("layout/main"))
 app.use("/", authRouter);
-// app.get('/',authRouter)
+
 
 app.use('/students',studentRoutes)
 

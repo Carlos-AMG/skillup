@@ -19,7 +19,6 @@ model Student {
   profileImage      String?
   cv                String?
   link              String?
-  token             String?
 }
 
 model Company {
@@ -31,5 +30,4 @@ model Company {
   address     String
   description String
   verified    Boolean?
-  token       String?
 }
