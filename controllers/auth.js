@@ -9,13 +9,8 @@ const logIn= (req,res)=>{
 const signUp = (req,res)=>{
 
     const type = req.params.userType;
-    let singUpPage ;
-    if(type == "students"){
-        singUpPage = "signup"
-    }else{
-        singUpPage = "signupCompany"
-    }
-    res.render(`partials/${singUpPage}`,{
+
+    res.render(`${type}/signup`,{
         type,
         pagina: 'SignUp'
     })
