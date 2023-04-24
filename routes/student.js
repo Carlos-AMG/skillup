@@ -1,8 +1,8 @@
 import express from 'express'
-import {} from '../controllers/student.js'
+import {getProfilePage} from '../controllers/student.js'
 
 const studentRouter = express.Router();
 
-// studentRouter.post('/signup', register)
+studentRouter.get("/profile",getProfilePage);
 
 export default studentRouter;

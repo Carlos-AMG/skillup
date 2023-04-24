@@ -34,7 +34,7 @@ export const signUpPage = (req,res)=>{
 export const postSignIn = (req, res, next) => {
     const userType = req.params.userType;
   
-    const successRedirect = `/${userType}/dashboard`;
+    const successRedirect = `/${userType}/profile`;
     const failureRedirect = `/${userType}/login`;
   
     passport.authenticate(`${userType}-local`, {

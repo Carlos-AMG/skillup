@@ -15,13 +15,11 @@ const authRouter = Router();
 authRouter.get('/:userType/login', signInPage);
 authRouter.get('/:userType/signup', signUpPage);
 
-
 // SignIn routes`
 authRouter.post("/:userType/login", postSignIn);
 
 // SignUp routes
 authRouter.post("/:userType/signup",userTypeValidation,  registerUser);
-
 
 authRouter.get("/:userType/forgot-password", forgotPassword);
 
