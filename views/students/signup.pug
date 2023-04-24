@@ -9,6 +9,7 @@ block contenido
         .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
                 form(action="/students/signup" method="POST" id="signup-form").space-y-5
+                    include ../partials/_errors
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="fullname") Your Name
                         input#fullName.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your name" type="text" name="fullName" required) 

@@ -6,7 +6,7 @@ import passport from "passport";
 const prisma = new PrismaClient();
 
 passport.use(
-  "student-local",
+  "students-local",
   new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {
       const student = await prisma.student.findUnique({ where: { email } });
@@ -34,7 +34,7 @@ passport.use(
 );
 
 passport.use(
-  "company-local",
+  "companies-local",
   new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {
       const company = await prisma.company.findUnique({ where: { email } });

@@ -2,13 +2,12 @@ import { Router } from "express";
 
 import {
   forgotPassword,
-  signInStudent,
-  signInCompany,
-  registerStudent,
-  registerCompany,
   signInPage,
-  signUpPage
+  signUpPage,
+  postSignIn,
+  registerUser
 } from "../controllers/auth.js";
+import { userTypeValidation } from "../middlewares/userValidation.js";
 
 const authRouter = Router();
 
@@ -17,13 +16,12 @@ authRouter.get('/:userType/login', signInPage);
 authRouter.get('/:userType/signup', signUpPage);
 
 
-// SignIn routes
-authRouter.post("/students/login", signInStudent);
-authRouter.post("/companies/login", signInCompany);
+// SignIn routes`
+authRouter.post("/:userType/login", postSignIn);
 
 // SignUp routes
-authRouter.post("/students/signup", registerStudent);
-authRouter.post("/companies/signup", registerCompany);
+authRouter.post("/:userType/signup",userTypeValidation,  registerUser);
+
 
 authRouter.get("/:userType/forgot-password", forgotPassword);
 
