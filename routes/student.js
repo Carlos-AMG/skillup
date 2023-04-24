@@ -1,9 +1,9 @@
 import express from 'express'
-import{} from '../controllers/student.js'
+import {register} from '../controllers/student.js'
 
 const studentRouter = express.Router();
 
-
+studentRouter.post('/signup', register)
 
 
 
