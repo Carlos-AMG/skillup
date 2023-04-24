@@ -7,5 +7,5 @@ export const getProfilePage = async (req,res) => {
     const student = await prisma.student.findUnique({
         id
     });
-    res.render("students/profile",{id:req.user.id})
+    res.render("students/profile",{student})
 } 

@@ -53,6 +53,7 @@ export const registerUser = async (req, res) => {
         type: userType,
         pagina: "SignUp",
         errors: errors.array(),
+        ...req.body//{full}
       });
     }
     
