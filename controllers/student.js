@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { PrismaClient } from "@prisma/client"
 import { check, validationResult } from "express-validator"
 import bcrypt from 'bcrypt'
@@ -103,3 +104,9 @@ export{
     register,
     formularioOlvidePassword
 } 
+=======
+
+export{
+
+}
+>>>>>>> 8f995e978f7b05ed45248c50ef4e6779354630b1
