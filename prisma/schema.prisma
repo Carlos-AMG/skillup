@@ -19,6 +19,7 @@ model Student {
   profileImage      String?
   cv                String?
   link              String?
+  verified          Boolean?
   token             String?
 }
 
