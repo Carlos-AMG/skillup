@@ -5,7 +5,9 @@ import {
     register,
     confirm,
     formularioOlvidePassword,
-    postSignIn
+    postSignIn,
+    getProfilePage,
+    getDashboardPage
 } from '../controllers/student.js'
 
 const studentRouter = express.Router();
@@ -16,7 +18,7 @@ studentRouter.get('/login', logInStudent);
 
 studentRouter.get("/profile",getProfilePage);
 studentRouter.get("/dashboard", getDashboardPage)
-
+studentRouter.post("/login",[postSignIn])
 studentRouter.get('/signup', signUpStudent);
 studentRouter.post("/signup",  register);
 

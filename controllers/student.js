@@ -24,7 +24,6 @@ export const getDashboardPage = async (req,res)=>{
         'dashboard', 'ups', 'edit_profile', 'logout'
     ]})
   }
-}
 
 const logInStudent = (req,res)=>{
     res.render('partials/login',{
@@ -169,10 +168,10 @@ const confirm =async (req,res,next)=>{
 }
 
 const postSignIn = (req, res, next) => {
-    const successRedirect = `/student/profile`;
-    const failureRedirect = `/student/login`;
+    const successRedirect = `/students/profile`;
+    const failureRedirect = `/students/login`;
   
-    passport.authenticate(`student-local`, {
+    passport.authenticate(`students-local`, {
       successRedirect,
       failureRedirect,
     })(req, res, next);
@@ -184,6 +183,7 @@ export{
     register,
     confirm,
     formularioOlvidePassword,
-    postSignIn
+    postSignIn,
+    getProfilePage,
 } 
 
