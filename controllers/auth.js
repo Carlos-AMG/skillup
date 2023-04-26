@@ -8,7 +8,11 @@
 // const getSingularForm = (userType) => {
 //     return userType === "students" ? "student" : "company";
 //   };
-
+export const main = (req,res)=>{
+    res.render('layout/main',{
+        pagina:"Main"
+    })
+}
 // //Render
 // export const signInPage= (req,res)=>{
 //     const type = req.params.userType; 

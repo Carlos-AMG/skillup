@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import passport from "passport";
 import { validationResult,check } from "express-validator";
 import { generarId } from "../helpers/token.js";
-import { emailSignUp } from "../helpers/emails.js";
+import { emailSignUp,emailForgotPassword } from "../helpers/emails.js";
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
@@ -42,7 +42,7 @@ const signUpStudent = (req,res)=>{
 const formularioOlvidePassword = (req,res)=>{
     res.render('partials/olvide-password',{
         type:"Students",
-        pagina: 'Forgotten Password?'
+        pagina: 'Forgot Password?'
     })
 }
 
@@ -75,8 +75,7 @@ const register =async (req,res)=>{
             }
         })
     }
-    //Verrificar que el usuario no este registrado
-    
+    //Verificar que el usuario no este registrado
     const existStudent = await prisma.Student.findUnique({
         where:{
             email
@@ -147,11 +146,11 @@ const confirm =async (req,res,next)=>{
         return res.render('partials/confirm-account',{
             pagina:"Confirm Account",
             type:"Students",
-            mensaje: "Error comfirming account",
+            mensaje: "Error confirming account",
             error:true
         })
     }
-    const updatedUser = await prisma.student.update({
+    await prisma.student.update({
         where:{token},
         data: {
             verified:true,
@@ -177,6 +176,69 @@ const postSignIn = (req, res, next) => {
     })(req, res, next);
   };
 
+const resetPassword=async(req,res)=>{
+
+    await check('email').isEmail().withMessage("That's not an email").run(req)
+
+    let result = validationResult(req)
+ 
+    //Verifica que el resultado no este vacio
+    if(!result.isEmpty()){
+        return res.render('partials/olvide-password',{
+            pagina:'Forgot Password?',
+            type:"Students",
+            errors: result.array(),
+        })
+    }
+
+    //Buscar el usuario
+    const{email} = req.body
+    const existStudent = await prisma.Student.findUnique({
+        where:{
+            email
+        }
+    })
+
+    if(!existStudent){
+        return res.render('partials/olvide-password',{
+            pagina:'Forgot Password?',
+            type:"Students",
+            errors: [{msg:"The email does't belong to any user"}],
+        })
+    }
+
+    //Generar un token 
+    existStudent.token = generarId()
+    const{token,id,fullName} = existStudent
+
+    
+    await prisma.student.update({
+        where:{id},
+        data: {
+            token 
+        }
+    })
+    
+    //Enviar email
+    emailForgotPassword({
+        email,
+        fullName,
+        token  
+    })
+    //Renderizar mensaje
+    res.render('partials/mensaje',{
+        type:'Students',
+        pagina:'Reset Password',
+        message: "We've sent an email with the instructions"
+    })
+}   
+
+const checkToken=(req,res,next)=>{
+    next()
+}
+const newPassword=(req,res)=>{
+    
+}
 export{
     logInStudent,
     signUpStudent,
@@ -185,5 +247,8 @@ export{
     formularioOlvidePassword,
     postSignIn,
     getProfilePage,
+    resetPassword,
+    checkToken,
+    newPassword
 } 
 

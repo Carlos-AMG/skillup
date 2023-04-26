@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import { main } from "../controllers/auth.js";
 // import {
 //   forgotPassword,
 //   signInPage,
@@ -11,7 +11,7 @@ import { Router } from "express";
 
 const authRouter = Router();
 
-
+authRouter.get('/',main)
 
 export default authRouter;
 
