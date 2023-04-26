@@ -233,11 +233,30 @@ const resetPassword=async(req,res)=>{
     })
 }   
 
-const checkToken=(req,res,next)=>{
-    next()
+const checkToken=async(req,res)=>{
+    const {token} = req.params
+    const studentFind = await prisma.student.findUnique({
+        where: {
+          token
+        }
+      })
+    if(!studentFind){
+        return res.render('partials/confirm-account',{
+            pagina:"Reset Password",
+            type:"Students",
+            mensaje: "Error resetting password",
+            error:true
+        })
+    }
+
+    //Mostrar Formulario para modificar el password
+    res.render('partials/resetPassword',{
+        type:"Students",
+        pagina: 'Reset Password'
+    })
 }
 const newPassword=(req,res)=>{
-    
+    console.log('Saving password')
 }
 export{
     logInStudent,
