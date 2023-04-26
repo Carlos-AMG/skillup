@@ -16,9 +16,11 @@ model Student {
   password          String
   fullName          String
   education         String
+  token             String?               @unique
   profileImage      String?
   cv                String?
   link              String?
+  verified          Boolean?       
 }
 
 model Company {

@@ -20,9 +20,11 @@ block contenido
                         
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password")
                     .flex.items-center.justify-between 
-                        
-                        a.text-gray-500.text-xs(href=`/${type}/signup`) New to SkillUp? SignUp
-                        a.text-gray-500.text-xs(href=`/${type}/forgot-password`) Forgotten Password?
-
+                        if type === 'Students'
+                            a.text-gray-500.text-xs(href=`/students/signup`) New to SkillUp? SignUp
+                            a.text-gray-500.text-xs(href=`/students/forgot-password`) Forgotten Password?
+                        else 
+                            a.text-gray-500.text-xs(href=`/companies/signup`) New to SkillUp? SignUp
+                            a.text-gray-500.text-xs(href=`/companies/forgot-password`) Forgotten Password?
                            
                     input(type="submit" value="LogIn" class="w-full bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md")

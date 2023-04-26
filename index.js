@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import studentRoutes from './routes/student.js';
+import studentRouter from './routes/student.js';
 import companyRoutes from './routes/company.js'
 import authRouter from './routes/auth.js';
 import session from 'express-session';
@@ -31,7 +31,7 @@ app.get("/",(req,res) => res.render("layout/main"))
 app.use("/", authRouter);
 
 
-app.use('/students',studentRoutes)
+app.use('/students',studentRouter)
 
 app.use('/companies',companyRoutes)
 
