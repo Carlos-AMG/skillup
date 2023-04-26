@@ -1,0 +1,9 @@
+nav 
+    include ../../partials/logo 
+    #links.flex-row 
+        
+        ul
+            - for(page of pages){
+                li 
+                    a(href=`/${page}`)= page
+            - }

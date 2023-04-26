@@ -1,2 +1,35 @@
-h1 Hola mundo
-p= id
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title SkillUp | #{pagina}
+        link(rel="stylesheet", href="/css/app.css")
+        link(rel="stylesheet", href="/css/styles.css")
+    header
+      include partials/_nav
+      h1(class="text-center text-4xl font-extrabold py-10 text-green-500") Información del usuario
+    main(class="max-w-4xl mx-auto")
+      section
+        h2(class="text-2xl font-extrabold py-5") Datos personales
+        div(class="bg-white p-5 rounded-lg shadow-md")
+          p(class="font-bold") Nombre: Juan Pérez
+          p(class="font-bold") Correo: juanperez@example.com
+          p(class="font-bold") Teléfono: 555-123-4567
+          p(class="font-bold") Dirección: Avenida Reforma 123, Ciudad de México, México
+      section
+        h2(class="text-2xl font-extrabold py-5") Educación
+        div(class="bg-white p-5 rounded-lg shadow-md")
+          p(class="font-bold") Universidad: Universidad Nacional Autónoma de México
+          p(class="font-bold") Carrera: Ingeniería en Sistemas Computacionales
+          p(class="font-bold") Fecha de graduación: Diciembre 2023
+      section
+        h2(class="text-2xl font-extrabold py-5") Experiencia laboral
+        div(class="bg-white p-5 rounded-lg shadow-md")
+          p(class="font-bold") Empresa: ACME Corporation
+          p(class="font-bold") Puesto: Desarrollador web
+          p(class="font-bold") Periodo: Enero 2022 - Presente
+      footer(class="bg-gray-200 py-5 text-center")
+        p Copyright © 2023 - Juan Pérez
+

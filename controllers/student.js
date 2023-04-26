@@ -10,9 +10,20 @@ const prisma = new PrismaClient()
 const getProfilePage = async (req,res) => {
     let id = req.user.id
     const student = await prisma.student.findUnique({
-        id
+        where:{
+            id
+        }
     });
-    res.render("students/profile",{student})
+    res.render("students/profile",{student,pages:[
+        'dashboard', 'ups', 'edit_profile', 'logout'
+    ]})
+} 
+
+export const getDashboardPage = async (req,res)=>{
+    res.render("students/dashboard",{student,pages:[
+        'dashboard', 'ups', 'edit_profile', 'logout'
+    ]})
+  }
 }
 
 const logInStudent = (req,res)=>{
@@ -175,3 +186,4 @@ export{
     formularioOlvidePassword,
     postSignIn
 } 
+
