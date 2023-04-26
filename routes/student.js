@@ -13,12 +13,13 @@ import {
 const studentRouter = express.Router();
 //Render
 studentRouter.get('/login', logInStudent);
+studentRouter.post("/login",[postSignIn])
 // studentRouter.post("/students/login", register);
 
 
 studentRouter.get("/profile",getProfilePage);
 studentRouter.get("/dashboard", getDashboardPage)
-studentRouter.post("/login",[postSignIn])
+
 studentRouter.get('/signup', signUpStudent);
 studentRouter.post("/signup",  register);
 
