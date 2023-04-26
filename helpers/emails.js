@@ -10,7 +10,7 @@ const emailSignUp = async(data)=>{
         }
       })
       const{fullName,email,token} = data
-      console.log(token)
+
       //Enviar el email
       await transport.sendMail({
         from:'SkillUp.com',
@@ -20,12 +20,11 @@ const emailSignUp = async(data)=>{
         html: `
             <p>Hi ${fullName}!, check your SkillUp account</p>
             <p>Your account is already ready, you just have to confirm it in the following link: 
-                <a href "http://localhost:3000/students/confirm/${token}">Confirm Account</a>
+                <a href="http://localhost:3000/students/confirm/${token}">Confirm Account</a>
             </p>
             <p>If you did not create this account, ignore the message</p>
         `
       })
-      console.log('Token',token)
 }
 
 export{

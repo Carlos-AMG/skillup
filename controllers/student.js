@@ -125,9 +125,36 @@ const register =async (req,res)=>{
 
 }
 //Comprueba la cuenta
-const confirm =(req,res,next)=>{
+const confirm =async (req,res,next)=>{
     
-    console.log(req.params.token)
+    const {token} = req.params
+    const studentFind = await prisma.student.findUnique({
+        where: {
+          token
+        }
+      })
+    if(!studentFind){
+        return res.render('partials/confirm-account',{
+            pagina:"Confirm Account",
+            type:"Students",
+            mensaje: "Error comfirming account",
+            error:true
+        })
+    }
+    const updatedUser = await prisma.student.update({
+        where:{token},
+        data: {
+            verified:true,
+            token:null 
+        }
+    })
+
+    res.render('partials/confirm-account',{
+        pagina:"Welcome to SkillUp",
+        type:"Students",
+        mensaje: "Your account has been confirmed",
+        error:false
+    })
 }
 
 const postSignIn = (req, res, next) => {
