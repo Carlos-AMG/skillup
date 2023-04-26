@@ -1,80 +1,46 @@
-import { Strategy as LocalStrategy } from "passport-local";
-import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
-import passport from "passport";
+import passport from 'passport'
+import bcrypt from 'bcrypt'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient();
 
 passport.use(
-  "students-local",
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+  new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
     try {
+      if (!email || !password) {
+        return done(null, false, { msg: 'Mandatory fields' });
+      }
+
       const student = await prisma.student.findUnique({ where: { email } });
 
       if (!student) {
-        return done(null, false, { message: "Email no registrado" });
+        return done(null, false, { msg: 'Incorrect email' });
       }
 
-      const isValidPassword = await bcrypt.compare(password, student.password);
+      const isMatch = await bcrypt.compare(password, student.password);
 
-      if (!isValidPassword) {
-        return done(null, false, { message: "Contraseña incorrecta" });
+      if (!isMatch) {
+        return done(null, false, { msg: 'Incorrect password.' });
       }
-
-      const user = {
-        ...student,
-        userType: "student",
-      };
-
-      return done(null, user);
+      return done(null, student);
     } catch (error) {
       return done(error);
     }
   })
 );
 
-passport.use(
-  "companies-local",
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
-    try {
-      const company = await prisma.company.findUnique({ where: { email } });
-
-      if (!company) {
-        return done(null, false, { message: "Email no registrado" });
-      }
-
-      const isValidPassword = await bcrypt.compare(password, company.password);
-
-      if (!isValidPassword) {
-        return done(null, false, { message: "Contraseña incorrecta" });
-      }
-
-      const user = {
-        ...company,
-        userType: "company",
-      };
-
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, { id: user.id, userType: user.userType });
+passport.serializeUser((student, done) => {
+  done(null, student.id);
 });
 
-passport.deserializeUser(async ({ id, userType }, done) => {
+passport.deserializeUser(async (id, done) => {
   try {
-    const user =
-      userType === "student"
-        ? await prisma.student.findUnique({ where: { id } })
-        : await prisma.company.findUnique({ where: { id } });
-    done(null, user);
-  } catch (err) {
-    done(err);
+    const student = await prisma.student.findUnique({ where: { id } });
+
+    done(null, student);
+  } catch (error) {
+    done(error);
   }
 });
-
 export default passport;

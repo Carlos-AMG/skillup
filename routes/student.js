@@ -19,7 +19,7 @@ studentRouter.get('/signup', signUpStudent);
 studentRouter.post("/signup",  register);
 
 studentRouter.get('/login', logInStudent);
-studentRouter.post("/login",[postSignIn])
+studentRouter.post("/login",postSignIn)
 // studentRouter.post("/students/login", register);
 
 

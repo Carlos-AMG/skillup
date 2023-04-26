@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import passport from "passport";
+import passport from "../config/passport.js";
 import { validationResult,check } from "express-validator";
 import { generarId } from "../helpers/token.js";
 import { emailSignUp,emailForgotPassword } from "../helpers/emails.js";
@@ -166,13 +166,43 @@ const confirm =async (req,res,next)=>{
     })
 }
 
-const postSignIn = (req, res, next) => {
-    const successRedirect = `/students/profile`;
-    const failureRedirect = `/students/login`;
+const postSignIn = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render('partials/login', { errors: [{ msg: 'Please enter your email and password' }] });
+    }
+    
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.render('partials/login', {
+        errors: [{ msg: 'Mandatory fields' }],
+        });
+    }
   
-    passport.authenticate(`students-local`, {
-      successRedirect,
-      failureRedirect,
+    passport.authenticate('local', (err, student, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (!student) {
+        return res.render('partials/login', { 
+            errors: [{ 
+                msg: info.msg 
+            }],
+            student:{
+                email
+            }
+        });
+      }
+  
+      req.logIn(student, (err) => {
+        if (err) {
+          return next(err);
+        }
+  
+        return res.redirect('/');
+      });
     })(req, res, next);
   };
 
