@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import passport from "passport";
 import { validationResult,check } from "express-validator";
 import { generarId } from "../helpers/token.js";
-
+import { emailSignUp } from "../helpers/emails.js";
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
@@ -97,7 +97,7 @@ const register =async (req,res)=>{
       });
       
     //Almacenar un nuevo usuario 
-    await prisma.Student.create(
+    const student = await prisma.Student.create(
         {data:{
             fullName,
             email,
@@ -109,7 +109,13 @@ const register =async (req,res)=>{
             token: generarId()
         }}
     )
+    //Envia email de confirmacion
 
+    emailSignUp({
+        fullName: student.fullName,
+        email:student.email,
+        token:student.token
+    })
     //Mostrar msj de confirmacion
     res.render('partials/mensaje',{
         type:'Students',
@@ -118,6 +124,12 @@ const register =async (req,res)=>{
     })
 
 }
+//Comprueba la cuenta
+const confirm =(req,res,next)=>{
+    
+    console.log(req.params.token)
+}
+
 const postSignIn = (req, res, next) => {
     const successRedirect = `/student/profile`;
     const failureRedirect = `/student/login`;
@@ -132,6 +144,7 @@ export{
     logInStudent,
     signUpStudent,
     register,
+    confirm,
     formularioOlvidePassword,
     postSignIn
 } 
