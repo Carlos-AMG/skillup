@@ -103,7 +103,7 @@ const register =async (req,res)=>{
         }
       
         return next(params);
-      });
+    });
       
     //Almacenar un nuevo usuario 
     const student = await prisma.Student.create(
@@ -137,12 +137,12 @@ const register =async (req,res)=>{
 const confirm =async (req,res,next)=>{
     
     const {token} = req.params
-    const studentFind = await prisma.student.findUnique({
+    const student = await prisma.student.findUnique({
         where: {
           token
         }
       })
-    if(!studentFind){
+    if(!student){
         return res.render('partials/confirm-account',{
             pagina:"Confirm Account",
             type:"Students",
@@ -235,12 +235,12 @@ const resetPassword=async(req,res)=>{
 
 const checkToken=async(req,res)=>{
     const {token} = req.params
-    const studentFind = await prisma.student.findUnique({
+    const student = await prisma.student.findUnique({
         where: {
           token
         }
       })
-    if(!studentFind){
+    if(!student){
         return res.render('partials/confirm-account',{
             pagina:"Reset Password",
             type:"Students",
@@ -255,8 +255,46 @@ const checkToken=async(req,res)=>{
         pagina: 'Reset Password'
     })
 }
-const newPassword=(req,res)=>{
-    console.log('Saving password')
+const newPassword=async(req,res)=>{
+    //Validar el password
+    await check('password').isLength({min:6}).withMessage('The password must have a minimum of 6 characters').run(req)
+    
+    let result = validationResult(req)
+ 
+    //Verifica que el resultado no este vacio
+    if(!result.isEmpty()){
+        return res.render('partials/resetPassword',{
+            pagina:'Reset your Password',
+            type:"Students",
+            errors: result.array(),
+        })
+    }
+
+    //Identificar quien hace el cambio
+    const {token} = req.params
+    const {password} = req.body
+
+    const student = await prisma.student.findUnique({
+        where: {
+          token
+        }
+    })
+
+    //Hashear el nuevo password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const {id} = student
+    await prisma.student.update({
+        where:{id},
+        data: {
+            token: null,
+            password:hashedPassword
+        }
+    })
+
+    res.render('partials/confirm-account',{
+        pagina:'Pasword Reset',
+        mensaje:'Password saved successfully'
+    })
 }
 export{
     logInStudent,
