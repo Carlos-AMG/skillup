@@ -3,6 +3,7 @@ import {
     logInStudent,
     signUpStudent,
     register,
+    confirm,
     formularioOlvidePassword,
     postSignIn
 } from '../controllers/student.js'
@@ -14,6 +15,8 @@ studentRouter.get('/login', logInStudent);
 
 studentRouter.get('/signup', signUpStudent);
 studentRouter.post("/signup",  register);
+
+studentRouter.get('/confirm/:token',confirm)
 
 studentRouter.get("/forgot-password", formularioOlvidePassword);
 
