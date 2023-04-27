@@ -201,7 +201,7 @@ const postSignIn = async (req, res, next) => {
           return next(err);
         }
   
-        return res.redirect('/');
+        return res.render('students/dashboard');
       });
     })(req, res, next);
   };

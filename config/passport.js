@@ -11,7 +11,7 @@ passport.use(
       if (!email || !password) {
         return done(null, false, { msg: 'Mandatory fields' });
       }
-
+ 
       const student = await prisma.student.findUnique({ where: { email } });
 
       if (!student) {
