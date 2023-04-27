@@ -32,4 +32,5 @@ model Company {
   address     String
   description String
   verified    Boolean?
+
 }

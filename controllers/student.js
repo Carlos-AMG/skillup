@@ -39,6 +39,12 @@ const signUpStudent = (req,res)=>{
     })
 }
 
+const getmyUpsPage = (req, res)=>{
+    res.render('students/myUps',{
+        pagina: 'MyUps'
+    })
+}
+
 const formularioOlvidePassword = (req,res)=>{
     res.render('partials/olvide-password',{
         type:"Students",
@@ -201,7 +207,7 @@ const postSignIn = async (req, res, next) => {
           return next(err);
         }
   
-        return res.render('students/dashboard');
+        return res.render('students/dashboard' ,{pagina:"dashboard"});
       });
     })(req, res, next);
   };
@@ -336,6 +342,7 @@ export{
     getProfilePage,
     resetPassword,
     checkToken,
-    newPassword
+    newPassword,
+    getmyUpsPage
 } 
 
