@@ -22,9 +22,9 @@ authRouter.post("/:userType/login", postSignIn);
 // SignUp routes
 authRouter.post("/:userType/signup",userTypeValidation,  registerUser);
 
-authRouter.get("/:userType/forgot-password", forgotPassword);
 
-/*
+
+/*authRouter.get("/:userType/forgot-password", forgotPassword);
 authRouter.get("/:userType/reset-password/:token", getResetPassword);
 authRouter.post("/:userType/reset-password/:token", postResetPassword);
 */
