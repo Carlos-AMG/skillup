@@ -11,7 +11,9 @@ const getSingularForm = (userType) => {
 
 //Render
 export const signInPage= (req,res)=>{
-    const type = req.params.userType; 
+    const type = req.params.userType;
+    
+    console.log(type)
     res.render('partials/login',{
         type,
         pagina:"LogIn"
@@ -21,7 +23,7 @@ export const signInPage= (req,res)=>{
 export const signUpPage = (req,res)=>{
 
     const type = req.params.userType;
-
+   
     res.render(`${type}/signup`,{
         type,
         pagina: 'SignUp'
@@ -33,8 +35,8 @@ export const signUpPage = (req,res)=>{
 
 export const postSignIn = (req, res, next) => {
     const userType = req.params.userType;
-   
-    const successRedirect = `/${userType}/dashboard`;
+    const successPage = userType == "student" ? "dashboard" : "offers"; 
+    const successRedirect = `/${userType}/${successPage}`;
     const failureRedirect = `/${userType}/login`;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -45,6 +47,7 @@ export const postSignIn = (req, res, next) => {
     passport.authenticate(`${userType}-local`, {
       successRedirect,
       failureRedirect,
+      failureFlash: true,
     })(req, res, next);
   };
 

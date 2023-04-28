@@ -19,6 +19,8 @@ model Student {
   profileImage      String?
   cv                String?
   link              String?
+  interestedJobs    InterestedJobStudent[]    
+  interestedCourses InterestedCourseStudent[] 
 }
 
 model Company {
@@ -30,4 +32,61 @@ model Company {
   address     String
   description String
   verified    Boolean?
+   jobs        Job[]
+  courses     Course[]
+}
+
+model Job {
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  jobType          String
+  skills           String
+  modality         String
+  salary           Int
+  hoursPerWeek     Int
+  area             Area    @relation(fields: [areaId], references: [id]) 
+  areaId           String  // Updated
+  company          Company  @relation(fields: [companyId], references: [id])
+  companyId        String
+  interestedStudents  InterestedJobStudent[]    // Updated
+}
+
+model Course {
+  id               String   @id @default(uuid())
+  title            String
+  startDate        DateTime
+  endDate          DateTime
+  description      String
+  prerequisites    String?
+  modality         String
+  area             Area    @relation(fields: [areaId], references: [id]) // Updated
+  areaId           String  // Updated
+  company          Company  @relation(fields: [companyId], references: [id])
+  companyId        String
+  interestedStudents  InterestedCourseStudent[] // Updated
+}
+
+// New models
+model InterestedJobStudent {
+  id       String  @id @default(uuid())
+  student  Student @relation(fields: [studentId], references: [id])
+  studentId String
+  job      Job     @relation(fields: [jobId], references: [id])
+  jobId    String
+}
+
+model InterestedCourseStudent {
+  id       String  @id @default(uuid())
+  student  Student @relation(fields: [studentId], references: [id])
+  studentId String
+  course   Course  @relation(fields: [courseId], references: [id])
+  courseId String
+}
+
+model Area {
+  id     String   @id @default(uuid())
+  name   String
+  jobs   Job[]
+  courses Course[]
 }

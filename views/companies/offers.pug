@@ -1,0 +1,94 @@
+doctype html
+html
+  head
+    script.
+      function toggleForm(formType) {
+        document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
+        document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';
+      }
+  body
+    h1 Create Offer
+    label(for="offerType") Select Offer Type:
+    select#offerType(name="offerType" onchange="toggleForm(this.value)")
+      option(value="job") Job
+      option(value="course") Course
+
+    div#jobForm(style="display: none")
+        h2 Job Form
+        form(action="/companies/job" method="POST")
+            label(for="title") Title:
+            input(type="text" name="title" id="title" required)
+            br
+
+            label(for="description") Description:
+            textarea(name="description" id="description" required)
+            br
+
+            label(for="jobType") Job Type:
+            input(type="text" name="jobType" id="jobType" required)
+            br
+
+            label(for="skills") Skills:
+            input(type="text" name="skills" id="skills" required)
+            br
+
+            label(for="modality") Modality:
+            input(type="text" name="modality" id="modality" required)
+            br
+
+            label(for="salary") Salary:
+            input(type="number" name="salary" id="salary" required)
+            br
+
+            label(for="hoursPerWeek") Hours per week:
+            input(type="number" name="hoursPerWeek" id="hoursPerWeek" required)
+            br
+
+            label(for="areaId") Area:
+            select(name="areaId" id="areaId" required)
+                each area in areas
+                    option(value=area.id)= area.name
+            br
+
+            button(type="submit") Create Job
+
+    div#courseForm(style="display: none")
+        h2 Course Form
+        form(action="/companies/course" method="POST")
+            label(for="title") Title:
+            input(type="text" name="title" id="title" required)
+            br
+            label(for="startDate") Start Date:
+            input(type="datetime-local" name="startDate" id="startDate" required)
+            br
+            label(for="endDate") End Date:
+            input(type="datetime-local" name="endDate" id="endDate" required)
+            br
+            label(for="description") Description:
+            textarea(name="description" id="description" required)
+            br
+            label(for="prerequisites") Prerequisites:
+            input(type="text" name="prerequisites" id="prerequisites")
+            br
+            label(for="modality") Modality:
+            input(type="text" name="modality" id="modality" required)
+            br
+            label(for="areaId") Area:
+            select(name="areaId" id="areaId" required)
+                each area in areas
+                    option(value=area.id)= area.name
+            br
+            // If you need the companyId field
+            // input(type="hidden" name="companyId" value="yourCompanyId")
+
+            button(type="submit") Create Course
+
+
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const selectedOfferType = document.getElementById('offerType').value;
+        toggleForm(selectedOfferType);
+      });
+
+
+
