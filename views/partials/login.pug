@@ -6,12 +6,13 @@ block contenido
         span.font-extrabold #{type}
     .py-10 
         h2.text-center.text-4xl.font-extrabold.text-green-500.mt-0= pagina
-
+       
+        include ../partials/_error-login
         .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
+                
                 form(action="#{type}/login" method="POST").space-y-5
                     div 
-                        
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") #{type}  Email
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Email" type="email" name="email") 
                     div 

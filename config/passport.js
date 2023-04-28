@@ -7,18 +7,18 @@ const prisma = new PrismaClient();
 
 passport.use(
   "students-local",
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+  new LocalStrategy({ usernameField: "email", passReqToCallback: true}, async (req,email, password, done) => {
     try {
       const student = await prisma.student.findUnique({ where: { email } });
 
       if (!student) {
-        return done(null, false, { message: "Email no registrado" });
+        return done(null, false,  req.flash('error', 'Email no registrado'));
       }
 
       const isValidPassword = await bcrypt.compare(password, student.password);
 
       if (!isValidPassword) {
-        return done(null, false, { message: "Contraseña incorrecta" });
+        return done(null, false, req.flash('error', 'Contraseña incorrecta'));
       }
 
       const user = {
@@ -35,18 +35,18 @@ passport.use(
 
 passport.use(
   "companies-local",
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+  new LocalStrategy({ usernameField: "email", passReqToCallback: true }, async (req,email, password, done) => {
     try {
       const company = await prisma.company.findUnique({ where: { email } });
 
       if (!company) {
-        return done(null, false, { message: "Email no registrado" });
+        return done(null, false, req.flash('error', 'Email no registrado'));
       }
 
       const isValidPassword = await bcrypt.compare(password, company.password);
 
       if (!isValidPassword) {
-        return done(null, false, { message: "Contraseña incorrecta" });
+        return done(null, false, req.flash('error', 'Contraseña incorrecta'));
       }
 
       const user = {

@@ -1,13 +1,18 @@
 import { check } from "express-validator";
 
-export const signUpStudent  = [
+export const signUpStudent = [
   check("fullName").notEmpty().withMessage("Name is required"),
-  check("email").isEmail().withMessage("Valid email is required"),
-  check("education").notEmpty().withMessage("Education is required"),
+  check("email")
+    .notEmpty().withMessage("Email is required")
+    .isEmail().withMessage("Valid email is required"),
+  check("education")
+    .notEmpty().withMessage("Education is required"),
   check("password")
+    .notEmpty().withMessage("Password is required")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
 ];
+
 
 export const signUpCompany = [
     check("email")
