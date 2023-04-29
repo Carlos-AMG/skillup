@@ -1,13 +1,18 @@
-doctype html
-html
-  head
-    script.
-      function toggleForm(formType) {
-        document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
-        document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';
-      }
-  body
-    h1 Create Offer
+//- doctype html
+//- html
+//-   head
+//-     script.
+//-       function toggleForm(formType) {
+//-         document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
+//-         document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';
+//-       }
+
+extends ../layout/indexInCompanies
+block contenido
+
+    .mb-5
+      h1.text-center.text-4xl.font-bold Create 
+        span.font-normal Offer
     label(for="offerType") Select Offer Type:
     select#offerType(name="offerType" onchange="toggleForm(this.value)")
       option(value="job") Job
@@ -81,7 +86,10 @@ html
 
             button(type="submit") Create Course
 
-
+    script.
+      function toggleForm(formType) {
+        document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
+        document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';}
     script.
       document.addEventListener('DOMContentLoaded', function() {
         const selectedOfferType = document.getElementById('offerType').value;
