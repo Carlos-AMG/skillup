@@ -35,7 +35,7 @@ export const signUpPage = (req,res)=>{
 
 export const postSignIn = (req, res, next) => {
     const userType = req.params.userType;
-    const successPage = userType == "student" ? "dashboard" : "offers"; 
+    const successPage = userType == "students" ? "dashboard" : "offers"; 
     const successRedirect = `/${userType}/${successPage}`;
     const failureRedirect = `/${userType}/login`;
     const errors = validationResult(req);
@@ -91,57 +91,4 @@ export const forgotPassword = (req,res)=>{
 }
 
 
-/*
-import crypto from "crypto";
-import nodemailer from "nodemailer";
-export const postForgotPassword = async (req, res) => {
-  const { email } = req.body;
-  const userType = req.params.userType;
-  const singularForm = getSingularForm(userType);
-
-  try {
-    const user = await prisma[singularForm].findUnique({ where: { email } });
-
-    if (!user) {
-      return res.status(400).send("Email not found");
-    }
-
-    const token = crypto.randomBytes(20).toString("hex");
-    const expiration = Date.now() + 3600000; // 1 hour
-
-    await prisma[singularForm].update({
-      where: { email },
-      data: { resetPasswordToken: token, resetPasswordExpires: expiration },
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      to: email,
-      from: process.env.EMAIL,
-      subject: "Password Reset",
-      text: `You are receiving this email because you (or someone else) requested a password reset for your account.
-        Please click on the following link, or paste it into your browser to complete the password reset process:
-        http://${req.headers.host}/${userType}/reset-password/${token}
-        If you did not request this, please ignore this email and your password will remain unchanged.`,
-    };
-
-    transporter.sendMail(mailOptions, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Error sending the password reset email");
-      }
-      res.status(200).send("An email has been sent with further instructions");
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error processing the forgot password request");
-  }
-};*/
 

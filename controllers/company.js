@@ -1,18 +1,7 @@
 import { PrismaClient } from "@prisma/client"
-
+import { getAllAreas ,parseDate} from "../helpers/utils.js";
 const prisma = new PrismaClient();
 
-const getAllAreas= async () => {
-    
-        const areas = await prisma.area.findMany();
-        return areas;
-    
-}
-
-const parseDate = (dateString) => {
-    return new Date(dateString);
-  };
-  
 
 //Render
 
@@ -23,7 +12,6 @@ export const getOffersPage = async (req,res) =>{
         res.render('companies/offers',{
             areas,
             pagina:"Offers",
-            id: req.user.id
         })
       } catch (error) {
         console.error('Error while calling getAllAreas:', error);
@@ -80,3 +68,4 @@ export const createCourse = async (req,res)=>{
     }
 
 }
+

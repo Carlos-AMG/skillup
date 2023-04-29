@@ -9,10 +9,6 @@ import session from 'express-session';
 import passport from './config/passport.js';
 import flash from 'connect-flash';
 
-// ...
-
-
-
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,8 +35,8 @@ app.set('views','./views')
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/",(req,res) => res.render("layout/main"))
-app.use("/", authRouter);
 
+app.use("/", authRouter);
 
 app.use('/students',studentRoutes)
 
