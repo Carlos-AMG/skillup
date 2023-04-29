@@ -8,7 +8,7 @@ block content
         option(value="course") Course
       select#filter-area(name="areaId" required)
         //- Dynamically populate the options with the available areas
-        option(value="all") All
+        option(value="") All
         each area in areas
             option(value=area.id)= area.name
 

@@ -1,5 +1,5 @@
 import express from 'express'
-import{getDashboardPage,getProfilePage,getUpsPage,getJobCards,getJobDetails} from '../controllers/student.js'
+import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails} from '../controllers/student.js'
 import isAuth from '../middlewares/isAuth.js'
 const studentRouter = express.Router();
 
@@ -10,8 +10,8 @@ studentRouter.get("/profile",isAuth, getProfilePage);
 studentRouter.get("/my-ups", isAuth,getUpsPage);
 
 //API
-studentRouter.get('/api/job-cards', getJobCards);
-studentRouter.get('/api/job-details/:jobId', getJobDetails);
+studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
+studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
 
 

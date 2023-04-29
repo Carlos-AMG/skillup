@@ -1,64 +1,89 @@
-const jobContainer = document.querySelector("#offers-section");
+const offerSection = document.querySelector("#offers-section");
 const descriptionSection = document.querySelector(".description-section");
+
+const filterJobCourseSelect = document.querySelector("#filter-job-course");
+const filterAreaSelect = document.querySelector("#filter-area");
 
 let currentPage = 1;
 const limit = 2;
 
-const fetchJobs = async () => {
+
+
+
+
+let currentFilterJobCourse = filterJobCourseSelect.value;
+let currentFilterArea = filterAreaSelect.value === "all" ? null : filterAreaSelect.value;
+
+
+const clearOffers = () => {
+  offerSection.innerHTML = "";
+};
+
+
+filterJobCourseSelect.addEventListener("change", (event) => {
+  currentFilterJobCourse = event.target.value;
+  clearOffers();
+  currentPage = 1;
+  fetchOffers();
+});
+
+filterAreaSelect.addEventListener("change", (event) => {
+  currentFilterArea = event.target.value;
+  clearOffers();
+  currentPage = 1;
+  fetchOffers();
+});
+
+const fetchOffers = async () => {
   try {
     const response = await fetch(
-      `api/job-cards?page=${currentPage}&limit=${limit}`
+      `api/offer-cards/${currentFilterJobCourse}?page=${currentPage}&limit=${limit}&areaId=${currentFilterArea}`
     );
-    const jobs = await response.json();
-    console.log(jobs);
-    jobs.forEach((job) => {
-      const jobCard = document.createElement("div");
-      jobCard.classList.add("job-card");
-      jobCard.innerHTML = `
-                <h3>${job.title}</h3>
-                <p>Company: ${job.company.name}</p>
-                <p>Area: ${job.area.name}</p>
+    const offers = await response.json();
+    console.log(offers);
+    offers.forEach((offer) => {
+      const offerCard = document.createElement("div");
+      offerCard.classList.add("offer-card");
+      offerCard.innerHTML = `
+                <h3>${offer.title}</h3>
+                <p>Company: ${offer.company.name}</p>
+                <p>Area: ${offer.area.name}</p>
             `;
 
-      jobCard.addEventListener("click", () => {
-        fetchJobDetails(job.id);
+      offerCard.addEventListener("click", () => {
+        fetchOfferDetails(offer.id);
       });
 
-      jobContainer.appendChild(jobCard);
+      offerSection.appendChild(offerCard);
     });
 
     currentPage += 1;
   } catch (error) {
-    console.error("Error fetching jobs:", error);
+    console.error("Error fetching offers:", error);
   }
 };
 
-const fetchJobDetails = async (jobId) => {
+
+const fetchOfferDetails = async (offerId) => {
   try {
-    const response = await fetch(`api/job-details/${jobId}`);
-    const jobDetails = await response.json();
+    const response = await fetch(`api/offer-details/${currentFilterJobCourse}/${offerId}`);
+    const offerDetails = await response.json();
 
     descriptionSection.innerHTML = `
-      <h2>${jobDetails.title}</h2>
-      <p>Company: ${jobDetails.company.name}</p>
-      <p>Area: ${jobDetails.area.name}</p>
-      <p>Description: ${jobDetails.description}</p>
-      <p>Job Type: ${jobDetails.jobType}</p>
-      <p>Skills: ${jobDetails.skills}</p>
-      <p>Modality: ${jobDetails.modality}</p>
-      <p>Salary: ${jobDetails.salary}</p>
-      <p>Hours per week: ${jobDetails.hoursPerWeek}</p>
+      <h2>${offerDetails.title}</h2>
+      <p>Company: ${offerDetails.company.name}</p>
+      <p>Area: ${offerDetails.area.name}</p>
     `;
   } catch (error) {
     console.error("Error fetching job details:", error);
   }
 };
 
-jobContainer.addEventListener("scroll", () => {
-  if (jobContainer.offsetHeight + jobContainer.scrollTop >= jobContainer.scrollHeight) {
-    fetchJobs();
+offerSection.addEventListener("scroll", () => {
+  if (offerSection.offsetHeight + offerSection.scrollTop >= offerSection.scrollHeight) {
+    fetchOffers();
   }
 });
 
 // Load the initial set of jobs.
-fetchJobs();
+fetchOffers();

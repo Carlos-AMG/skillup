@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
-import { getAllAreas, getAllJobs} from "../helpers/utils.js";
+import { getAllAreas, getAllOffers} from "../helpers/utils.js";
 
 export const getProfilePage = async (req,res)=>{
     
@@ -26,12 +26,12 @@ export const getUpsPage = async (req,res) => {
 }
 
 //API
-export const getJobCards = async (req, res) => {
-    const { page = 1, limit = 2 } = req.query;
-  
+export const getOfferCards = async (req, res) => {
+    const { page = 1, limit = 2 ,areaId = null} = req.query;
+    const {offerType} = req.params;
     try {
-      const jobs = await getAllJobs(parseInt(page), parseInt(limit));
-      res.json(jobs);
+      const offers = await getAllOffers(offerType,areaId,parseInt(page), parseInt(limit));
+      res.json(offers);
     } catch (error) {
       console.error('Error in getJobCards controller:', error);
       res.status(500).send('Error fetching job cards');
@@ -40,13 +40,13 @@ export const getJobCards = async (req, res) => {
   
 
   
-export const getJobDetails = async (req, res) => {
-    const { jobId } = req.params;
+export const getOfferDetails = async (req, res) => {
+    const { offerId,offerType } = req.params;
   
     try {
-      const jobDetails = await prisma.job.findUnique({
+      const offerDetails = await prisma[offerType].findUnique({
         where: {
-          id: jobId,
+          id: offerId,
         },
         include: {
           company: true,
@@ -54,15 +54,15 @@ export const getJobDetails = async (req, res) => {
         },
       });
   
-      if (!jobDetails) {
-        res.status(404).json({ message: 'Job not found' });
+      if (!offerDetails) {
+        res.status(404).json({ message: 'Offer not found' });
         return;
       }
   
-      res.status(200).json(jobDetails);
+      res.status(200).json(offerDetails);
     } catch (error) {
-      console.error('Error fetching job details:', error);
-      res.status(500).json({ message: 'Error fetching job details' });
+      console.error('Error fetching offer details:', error);
+      res.status(500).json({ message: 'Error fetching offer details' });
     }
   };
   
