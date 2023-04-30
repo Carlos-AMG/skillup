@@ -5,8 +5,7 @@ const filterJobCourseSelect = document.querySelector("#filter-job-course");
 const filterAreaSelect = document.querySelector("#filter-area");
 
 let currentPage = 1;
-const limit = 2;
-
+const limit = 5;
 
 
 
@@ -48,6 +47,7 @@ const fetchOffers = async () => {
                 <h3>${offer.title}</h3>
                 <p>Company: ${offer.company.name}</p>
                 <p>Area: ${offer.area.name}</p>
+                <hr>
             `;
 
       offerCard.addEventListener("click", () => {

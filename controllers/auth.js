@@ -90,5 +90,11 @@ export const forgotPassword = (req,res)=>{
     })
 }
 
+export const logOut = (req, res, next) =>{
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+};
 
 
