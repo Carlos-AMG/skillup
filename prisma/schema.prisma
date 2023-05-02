@@ -46,10 +46,10 @@ model Job {
   salary           Int
   hoursPerWeek     Int
   area             Area    @relation(fields: [areaId], references: [id]) 
-  areaId           String  // Updated
+  areaId           String  
   company          Company  @relation(fields: [companyId], references: [id])
   companyId        String
-  interestedStudents  InterestedJobStudent[]    // Updated
+  interestedStudents  InterestedJobStudent[]    
 }
 
 model Course {
@@ -60,11 +60,11 @@ model Course {
   description      String
   prerequisites    String?
   modality         String
-  area             Area    @relation(fields: [areaId], references: [id]) // Updated
-  areaId           String  // Updated
+  area             Area    @relation(fields: [areaId], references: [id]) 
+  areaId           String  
   company          Company  @relation(fields: [companyId], references: [id])
   companyId        String
-  interestedStudents  InterestedCourseStudent[] // Updated
+  interestedStudents  InterestedCourseStudent[] 
 }
 
 // New models

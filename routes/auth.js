@@ -1,11 +1,12 @@
 import { Router } from "express";
 
 import {
-  forgotPassword,
+
   signInPage,
   signUpPage,
   postSignIn,
-  registerUser
+  registerUser,
+  logOut
 } from "../controllers/auth.js";
 import { userTypeValidation } from "../middlewares/userValidation.js";
 
@@ -22,7 +23,8 @@ authRouter.post("/:userType/login", postSignIn);
 // SignUp routes
 authRouter.post("/:userType/signup",userTypeValidation,  registerUser);
 
-
+// Log out
+authRouter.get('/logout', logOut);
 
 /*authRouter.get("/:userType/forgot-password", forgotPassword);
 authRouter.get("/:userType/reset-password/:token", getResetPassword);

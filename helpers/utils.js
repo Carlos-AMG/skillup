@@ -11,11 +11,17 @@ export const parseDate = (dateString) => {
   return new Date(dateString);
 };
 
-export const getAllJobs = async (page, limit) => {
+export const getAllOffers = async (offerType,areaId,page, limit) => {
     try {
-      const jobs = await prisma.job.findMany({
+      const where = {};
+
+      if (areaId) {
+        where.areaId = areaId;
+      }
+      const offers = await prisma[offerType].findMany({
         skip: (page - 1) * limit,
         take: limit,
+        where,
         include: {
             area: {
               select: {
@@ -29,10 +35,10 @@ export const getAllJobs = async (page, limit) => {
             },
           },
       });
-      console.log(jobs)
-      return jobs;
+      console.log(offers)
+      return offers;
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+      console.error('Error fetching offers:', error);
       throw error;
     }
   };
