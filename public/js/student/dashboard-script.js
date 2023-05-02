@@ -29,11 +29,11 @@ filterAreaSelect.addEventListener("change", updateFilterAndFetchOffers((value) =
 const createOfferCard = (offer) => {
   const offerCard = document.createElement("div");
   offerCard.classList.add("offer-card");
+  offerCard.classList.add("card");
   offerCard.innerHTML = `
     <h3>${offer.title}</h3>
     <p>Company: ${offer.company.name}</p>
     <p>Area: ${offer.area.name}</p>
-    <hr>
   `;
   offerCard.addEventListener("click", () => {
     fetchOfferDetails(offer.id);

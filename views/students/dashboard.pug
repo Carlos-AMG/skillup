@@ -6,25 +6,26 @@ block contenido
       span.font-normal Board
   .container.pt-2
     //- Section 1: Filters
-    .filter-section
-      select#filter-job-course
-        option(value="job") Job
-        option(value="course") Course
-      select#filter-area(name="areaId" required)
-        //- Dynamically populate the options with the available areas
-        option(value="") All
-        each area in areas
-            option(value=area.id)= area.name
+    main
+      .filter-section
+        select#filter-job-course
+          option(value="job") Job
+          option(value="course") Course
+        select#filter-area(name="areaId" required)
+          //- Dynamically populate the options with the available areas
+          option(value="") All
+          each area in areas
+              option(value=area.id)= area.name
 
-    br
-    hr
-    //- Section 2: Offers list
-    #offers-section(style="overflow-y: scroll; height: 200px;")
-      //- Render the offer cards dynamically
-    hr
-    //- Section 3: Full description of the selected offer
-    .description-section
-      //- Display the full description of the selected offer here
+      br
+      hr
+      //- Section 2: Offers list
+      #offers-section(style="overflow-y: scroll; height: 200px;")
+        //- Render the offer cards dynamically
+      hr
+      //- Section 3: Full description of the selected offer
+      .description-section
+        //- Display the full description of the selected offer here
     
     script(src="/js/student/dashboard-script.js") 
         

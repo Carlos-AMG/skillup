@@ -13,6 +13,7 @@ studentRouter.get("/my-ups", isAuth,getUpsPage);
 studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
 studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
+
 studentRouter.post('/api/express-interest/:offerType/:offerId', postInterest);
 
 
