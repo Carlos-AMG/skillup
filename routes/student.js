@@ -1,5 +1,5 @@
 import express from 'express'
-import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails} from '../controllers/student.js'
+import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails,postInterest} from '../controllers/student.js'
 import isAuth from '../middlewares/isAuth.js'
 const studentRouter = express.Router();
 
@@ -13,6 +13,7 @@ studentRouter.get("/my-ups", isAuth,getUpsPage);
 studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
 studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
+studentRouter.post('/api/express-interest/:offerType/:offerId', postInterest);
 
 
 export default studentRouter;

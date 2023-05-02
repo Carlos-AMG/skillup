@@ -39,7 +39,7 @@ const fetchOffers = async () => {
       `api/offer-cards/${currentFilterJobCourse}?page=${currentPage}&limit=${limit}&areaId=${currentFilterArea}`
     );
     const offers = await response.json();
-    console.log(offers);
+
     offers.forEach((offer) => {
       const offerCard = document.createElement("div");
       offerCard.classList.add("offer-card");
@@ -81,6 +81,9 @@ const fetchOfferDetails = async (offerId) => {
         <p>Modality: ${offerDetails.modality}</p>
         <p>Salary: ${offerDetails.salary}</p>
         <p>Hours per week: ${offerDetails.hoursPerWeek}</p>
+        <form id="express-interest-form" method="POST" action="api/express-interest/${currentFilterJobCourse}/${offerDetails.id}">
+        <button type="submit">UP</button>
+        </form>
       `;
     }else{
       infoOffer = `
@@ -92,6 +95,9 @@ const fetchOfferDetails = async (offerId) => {
       <p>Modality: ${offerDetails.modality}</p>
       <p>Start Date: ${new Date(offerDetails.startDate).toLocaleDateString()}</p>
       <p>End Date: ${new Date(offerDetails.endDate).toLocaleDateString()}</p>
+      <form id="express-interest-form" method="POST" action="api/express-interest/${currentFilterJobCourse}/${offerDetails.id}">
+      <button type="submit">UP</button>
+      </form>
     `;
     }
     descriptionSection.innerHTML = infoOffer;
