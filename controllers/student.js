@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 import { getAllAreas, getAllOffers} from "../helpers/utils.js";
+import { create } from "domain";
 
 export const getProfilePage = async (req,res)=>{
     
@@ -63,6 +64,38 @@ export const getOfferDetails = async (req, res) => {
     } catch (error) {
       console.error('Error fetching offer details:', error);
       res.status(500).json({ message: 'Error fetching offer details' });
+    }
+  };
+  
+  export const postInterest = async (req, res, next) => {
+    const { offerType, offerId } = req.params;
+    let interestType, data;
+  
+    if (offerType === "job") {
+      interestType = "InterestedJobStudent";
+      data = {
+        studentId: req.user.id,
+        jobId: offerId,
+      };
+    } else if (offerType === "course") {
+      interestType = "InterestedCourseStudent";
+      data = {
+        studentId: req.user.id,
+        courseId: offerId,
+      };
+    } else {
+      res.status(400).json({ message: "Invalid offer type" });
+      return;
+    }
+  
+    try {
+      const interest = await prisma[interestType].create({
+        data,
+      });
+      res.status(201).json({ message: "Interest registered", interest });
+    } catch (err) {
+      console.error("Error while registering interest:", err);
+      res.status(500).json({ message: "Error while registering interest" });
     }
   };
   

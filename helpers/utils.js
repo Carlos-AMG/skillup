@@ -35,7 +35,7 @@ export const getAllOffers = async (offerType,areaId,page, limit) => {
             },
           },
       });
-      console.log(offers)
+
       return offers;
     } catch (error) {
       console.error('Error fetching offers:', error);

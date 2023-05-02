@@ -67,7 +67,7 @@ model Course {
   interestedStudents  InterestedCourseStudent[] 
 }
 
-// New models
+
 model InterestedJobStudent {
   id       String  @id @default(uuid())
   student  Student @relation(fields: [studentId], references: [id])

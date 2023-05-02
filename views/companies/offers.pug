@@ -9,92 +9,106 @@
 
 extends ../layout/indexInCompanies
 block contenido
-
-    .mb-5
-      h1.text-center.text-4xl.font-bold Create 
-        span.font-normal Offer
-    label(for="offerType") Select Offer Type:
-    select#offerType(name="offerType" onchange="toggleForm(this.value)")
-      option(value="job") Job
-      option(value="course") Course
-
-    div#jobForm(style="display: none")
-        h2 Job Form
-        form(action="/companies/job" method="POST")
-            label(for="title") Title:
-            input(type="text" name="title" id="title" required)
-            br
-
-            label(for="description") Description:
-            textarea(name="description" id="description" required)
-            br
-
-            label(for="jobType") Job Type:
-            input(type="text" name="jobType" id="jobType" required)
-            br
-
-            label(for="skills") Skills:
-            input(type="text" name="skills" id="skills" required)
-            br
-
-            label(for="modality") Modality:
-            input(type="text" name="modality" id="modality" required)
-            br
-
-            label(for="salary") Salary:
-            input(type="number" name="salary" id="salary" required)
-            br
-
-            label(for="hoursPerWeek") Hours per week:
-            input(type="number" name="hoursPerWeek" id="hoursPerWeek" required)
-            br
-
-            label(for="areaId") Area:
-            select(name="areaId" id="areaId" required)
-                each area in areas
-                    option(value=area.id)= area.name
-            br
-
-            button(type="submit") Create Job
-
-    div#courseForm(style="display: none")
-        h2 Course Form
-        form(action="/companies/course" method="POST")
-            label(for="title") Title:
-            input(type="text" name="title" id="title" required)
-            br
-            label(for="startDate") Start Date:
-            input(type="datetime-local" name="startDate" id="startDate" required)
-            br
-            label(for="endDate") End Date:
-            input(type="datetime-local" name="endDate" id="endDate" required)
-            br
-            label(for="description") Description:
-            textarea(name="description" id="description" required)
-            br
-            label(for="prerequisites") Prerequisites:
-            input(type="text" name="prerequisites" id="prerequisites")
-            br
-            label(for="modality") Modality:
-            input(type="text" name="modality" id="modality" required)
-            br
-            label(for="areaId") Area:
-            select(name="areaId" id="areaId" required)
-                each area in areas
-                    option(value=area.id)= area.name
-            br
-
-            button(type="submit") Create Course
-
-    script.
-      function toggleForm(formType) {
-        document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
-        document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';}
     script.
       document.addEventListener('DOMContentLoaded', function() {
         const selectedOfferType = document.getElementById('offerType').value;
         toggleForm(selectedOfferType);
       });
+    .mb-5
+      h1.text-center.text-4xl.font-bold Create 
+        span.font-normal Offer
+      .mt-0.mx-auto.max-w-md 
+        .bg-white.py-8.px-4.shadow
+          label(for="offerType" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Select Offer Type:
+            select#offerType(name="offerType" class="w-full px-3 py-2 border border-gray-300 rounded-md " onchange="toggleForm(this.value)")
+              option(value="job") Job
+              option(value="course") Course
+
+
+    div#jobForm(style="display: none")
+        h2(class="text-center text-2xl font-extrabold text-sky-900 mt-2 mb-2") Job Form
+        .mt-0.mx-auto.max-w-md 
+          .bg-white.py-8.px-4.shadow
+            form(action="/companies/job" method="POST" class="text-black")
+
+              div
+                label(for="title" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Tittle:
+                input(type="text" name="title" id="title" required placeholder="Tittle" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 text-black")
+        
+              div.pt-5
+                label(for="description" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Description:
+                textarea(name="description" id="description" required placeholder="Description" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="jobType"  class="block text-sm uppercase text-gray-500 mb-2 font-bold") Job Type:
+                input(type="text" placeholder="Job Type" name="jobType" id="jobType" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="skills" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Skills:
+                input(type="text" name="skills" id="skills" placeholder="Skills" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="modality"  class="block text-sm uppercase text-gray-500 mb-2 font-bold") Modality:
+                input(type="text" placeholder="Modality" name="modality" id="modality" required  class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="salary" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Salary:
+                input(type="number" placeholder="Salary" name="salary" id="salary" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="hoursPerWeek" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Hours per week:
+                input(type="number" placeholder="Hours per week" name="hoursPerWeek" id="hoursPerWeek" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                
+              div.pt-5
+                label(for="areaId"  class="block text-sm uppercase text-gray-500 mb-2 font-bold") Area:
+                select(name="areaId" id="areaId" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                    each area in areas
+                        option(value=area.id)= area.name
+                
+              div.pt-5
+                input(type="submit" value="Create Job" class="w-full bg-sky-900 text-white uppercase hover:bg-sky-950 font-bold py-3 cursor-pointer rounded-md ") 
+
+    div#courseForm(style="display: none")
+        h2(class="text-center text-2xl font-extrabold text-sky-900 mt-2") Course Form
+        .mt-8.mx-auto.max-w-md 
+          .bg-white.py-8.px-4.shadow
+            label(for="offerType" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Select Offer Type:
+              select#offerType(name="offerType" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" onchange="toggleForm(this.value)")
+                option(value="job") Job
+                option(value="course") Course
+            form(action="/companies/course" method="POST")
+              div.pt-5div.pt-5
+                label(for="title" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Tittle:
+                input(type="text" name="title" id="title" placeholder="Hours p" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="startDate" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Start Date:
+                input(type="datetime-local" name="startDate" id="startDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="endDate" class="block text-sm uppercase text-gray-500 mb-2 font-bold") End Date:
+                input(type="datetime-local" name="endDate" id="endDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="description" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Description:
+                textarea(name="description" id="description" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="prerequisites" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Prerequisites:
+                input(type="text" name="prerequisites" id="prerequisites" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="modality" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Modality:
+                input(type="text" name="modality" id="modality" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+              div.pt-5  
+                label(for="areaId" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Area:
+                select(name="areaId" id="areaId" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")
+                    each area in areas
+                        option(value=area.id)= area.name
+                
+              div.pt-5
+                input(type="submit" value="Create Course" class="w-full bg-sky-900 text-white uppercase hover:bg-sky-950 font-bold py-3 cursor-pointer rounded-md ") 
+
+    script.
+      function toggleForm(formType) {
+        document.getElementById('jobForm').style.display = formType === 'job' ? 'block' : 'none';
+        document.getElementById('courseForm').style.display = formType === 'course' ? 'block' : 'none';}
+
 
 
 
