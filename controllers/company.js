@@ -28,10 +28,27 @@ export const getProfilePage = async (req,res) => {
     })
 }
 
+export const getSkillers= async(req,res)=>{
+    
+    try {
+        let skillers = await prisma.interestedJobStudent.findMany()
+        
+        res.render('companies/skillers',{
+            pagina:"Skillers",
+            skillers
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 //API
 export const createJob = async (req,res)=>{
     try{
         const {salary,hoursPerWeek,...restOfBody} = req.body
+        console.log('Company id: ', req.user.id)
+
         const newJob = await prisma.job.create({
             data:{
                 companyId:req.user.id,
@@ -40,6 +57,7 @@ export const createJob = async (req,res)=>{
                 hoursPerWeek: parseInt(hoursPerWeek),
             }
         })
+        console.log(newJob)
 
         res.status(201).json(newJob)
     }catch(error){

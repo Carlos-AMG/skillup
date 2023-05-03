@@ -6,7 +6,7 @@ block contenido
     h2 #{student.fullName}
 
     if student.profileImage
-      img(src=student.profileImage , alt="Profile picture", style="width: 150px; height: 150px;")
+      img(src=`api/profile-image/${student.id}` , alt="Profile picture", style="width: 200px; height: 200px;")
     else
       p No profile picture has been uploaded.
 

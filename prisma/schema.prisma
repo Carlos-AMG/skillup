@@ -31,8 +31,8 @@ model Company {
   name        String
   address     String
   description String
-  verified    Boolean?
-   jobs        Job[]
+  verified    Boolean @default(false)
+  jobs        Job[]
   courses     Course[]
 }
 

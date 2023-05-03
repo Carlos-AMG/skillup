@@ -2,8 +2,11 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 import { getAllAreas, getAllOffers} from "../helpers/utils.js";
 import path from 'path';
-import fs from 'node:fs/promises';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const getProfilePage = async (req, res) => {
   try {
@@ -17,8 +20,10 @@ export const getProfilePage = async (req, res) => {
       res.status(404).send("Student not found");
       return;
     }
+    console.log(student)
 
-    res.render("students/profile", { student });
+    res.render("students/profile", { student,studentId});
+    
   } catch (error) {
     console.error("Error fetching student data:", error);
     res.status(500).send("Error fetching student data");
@@ -129,6 +134,7 @@ export const getOfferDetails = async (req, res) => {
       const interest = await prisma[interestType].create({
         data,
       });
+      console.log(interest)
       res.status(201).json({ message: "Interest registered", interest });
     } catch (err) {
       console.error("Error while registering interest:", err);

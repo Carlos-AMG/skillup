@@ -49,6 +49,9 @@ passport.use(
         return done(null, false, req.flash('error', 'Contraseña incorrecta'));
       }
 
+      if(!company.verified){
+        return done(null, false, req.flash('error', 'Account not verified'));
+      }
       const user = {
         ...company,
         userType: "company",
