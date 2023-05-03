@@ -38,7 +38,7 @@ export const getSkillers= async(req,res)=>{
             }
         })
     
-        console.log(skillers)
+        ///-console.log(skillers)
         res.render('companies/skillers',{
             pagina:"Skillers",
             skillers

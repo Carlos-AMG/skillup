@@ -65,7 +65,35 @@ export const getEditProfilePage = async (req, res) => {
 
 
 export const getUpsPage = async (req,res) => {
-    res.render('students/my-ups')
+  try { let myUps=[]
+    const myUpsCourse= await prisma.InterestedCourseStudent.findMany({
+      where:{
+        studentId:req.user.id
+      }
+      ,include: {
+        course:true
+      }
+    })
+    const myUpsJobs= await prisma.InterestedJobStudent.findMany({
+      where:{
+        studentId:req.user.id
+      }
+      ,include: {
+        job:true
+      }
+    })
+    console.log(myUpsCourse)
+    console.log(myUpsJobs)
+    res.render('students/my-ups',{
+      pagina: 'My Ups',
+      myUpsCourse,
+      myUpsJobs
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }  
+  
 }
 
 //API
