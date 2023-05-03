@@ -5,11 +5,11 @@ import {
   signInPage,
   signUpPage,
   postSignIn,
-  registerUser,
+  registerUser, 
   logOut
 } from "../controllers/auth.js";
 import { userTypeValidation } from "../middlewares/userValidation.js";
-
+     
 const authRouter = Router();
 
 //Render

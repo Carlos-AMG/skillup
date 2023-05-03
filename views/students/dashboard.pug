@@ -1,31 +1,26 @@
 extends ../layout/indexInStudents
 
 block contenido
-  .mb-5
+  .mb-3.pb-3
     h1.text-center.text-4xl.font-bold Dash
       span.font-normal Board
   .container.pt-2
     //- Section 1: Filters
-    
-    .filter-section
-      select#filter-job-course
+    div#filter-section(class="mb-10 pt-2 w-full flex justify-center space-x-8")
+      select#filter-job-course(class="py-3 px-3 rounded-lg border-4 border-green-500")
         option(value="job") Job
         option(value="course") Course
-      select#filter-area(name="areaId" required)
+      select#filter-area(name="areaId" required class="py-3 px-3 rounded-lg border-4 border-green-500")
         //- Dynamically populate the options with the available areas
         option(value="") All
         each area in areas
-            option(value=area.id)= area.name
+          option(value=area.id)= area.name
+    div(class="grid gap-4 grid-cols-3 mt-5 pt-10")
+      #offers-section(style="overflow-y: scroll; height: 500px;" class="flex flex-col flex-nowrap justify-between items-stretch overflow-x-auto col-span-1")
+      .description-section(class="col-span-2")
+        h2(class="text-4xl font-bold text-center")
 
-    br
-    hr
-    //- Section 2: Offers list
-    #offers-section(style="overflow-y: scroll; height: 200px;")
-      //- Render the offer cards dynamically
-    hr
-    //- Section 3: Full description of the selected offer
-    .description-section
-      //- Display the full description of the selected offer here
-    
+
+
     script(src="/js/student/dashboard-script.js") 
         
