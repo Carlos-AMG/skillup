@@ -1,12 +1,29 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 import { getAllAreas, getAllOffers} from "../helpers/utils.js";
-import { create } from "domain";
+import path from 'path';
+import fs from 'node:fs/promises';
 
-export const getProfilePage = async (req,res)=>{
-    
-    res.render('students/profile');
-}
+
+export const getProfilePage = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+
+    if (!student) {
+      res.status(404).send("Student not found");
+      return;
+    }
+
+    res.render("students/profile", { student });
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+    res.status(500).send("Error fetching student data");
+  }
+};
 
 export const getDashboardPage = async (req,res) => {
     try {
@@ -21,6 +38,26 @@ export const getDashboardPage = async (req,res) => {
       }
 
 }
+export const getEditProfilePage = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+
+    if (!student) {
+      res.status(404).send("Student not found");
+      return;
+    }
+
+    res.render("students/edit-profile", { student });
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+    res.status(500).send("Error fetching student data");
+  }
+};
+
 
 export const getUpsPage = async (req,res) => {
     res.render('students/my-ups')
@@ -98,4 +135,96 @@ export const getOfferDetails = async (req, res) => {
       res.status(500).json({ message: "Error while registering interest" });
     }
   };
+
   
+export const updateStudentProfile = async (req, res) => {
+  const { fullName, education, studentId } = req.body;
+  const profileImage = req.files && req.files.profileImage ? req.files.profileImage[0] : undefined;
+  const cv = req.files && req.files.cv ? req.files.cv[0] : undefined;
+
+  try {
+    let updateData = {
+      fullName,
+      education,
+    };
+
+    if (profileImage) {
+      // Obtén la imagen actual del estudiante
+      const currentStudent = await prisma.student.findUnique({
+        where: { id: studentId },
+        select: { profileImage: true },
+      });
+    
+      // Elimina la imagen de perfil anterior si existe
+      if (currentStudent.profileImage) {
+        const oldImagePath = path.join(__dirname, '..', currentStudent.profileImage);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+    
+      updateData.profileImage = `uploads/profile_images/${profileImage.filename}`;
+    }
+
+    if (cv) {
+      updateData.cv = `uploads/cvs/${cv.filename}`;
+    }
+
+    await prisma.student.update({
+      where: {
+        id: studentId,
+      },
+      data: updateData,
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al actualizar el perfil del estudiante');
+  }
+};
+
+
+export const getStudentImage = async (req, res, next) => {
+  try {
+    const studentId = req.params.studentId;
+
+    // Lista de extensiones permitidas
+    const extensions = ['.jpeg', '.jpg', '.png'];
+
+    // Encuentra una imagen existente con alguna de las extensiones permitidas
+    let imagePath;
+    for (const ext of extensions) {
+      const tempPath = path.join(__dirname, '..', 'uploads', 'profile_images', `${studentId}${ext}`);
+      if (fs.existsSync(tempPath)) {
+        imagePath = tempPath;
+        break;
+      }
+    }
+
+    if (imagePath) {
+      res.sendFile(imagePath);
+    } else {
+      res.status(404).send('La imagen de perfil no se encuentra');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener la imagen de perfil del estudiante');
+  }
+};
+
+
+export const getStudentCv = async (req, res, next) => {
+  try {
+    const studentId = req.params.studentId;
+    const cvPath = path.join(__dirname, '..', 'uploads', 'cvs', `${studentId}.pdf`); // Asegúrate de cambiar la extensión si es necesario
+
+    if (fs.existsSync(cvPath)) {
+      res.sendFile(cvPath);
+    } else {
+      res.status(404).send('El cv no se encuentra');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener el cv del estudiante');
+  }
+};
