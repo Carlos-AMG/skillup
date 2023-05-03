@@ -1,0 +1,28 @@
+extends ../layout/indexInStudents
+
+block contenido
+    h1 Edit Student Profile
+
+    form#editProfileForm(enctype="multipart/form-data")
+        
+        input#studentId(name="studentId", type="hidden", value=student.id)
+
+        label(for="fullName") Full Name:
+        input(type="text", id="fullName", name="fullName", value=student.fullName)
+        br
+
+        label(for="education") Education:
+        input(type="text", id="education", name="education", value=student.education)
+        br
+
+        label(for="profileImage") Profile Picture:
+        input(type="file", id="profileImage", name="profileImage")
+        br
+
+        label(for="cv") Curriculum Vitae (CV):
+        input(type="file", id="cv", name="cv")
+        br
+            
+        input(type="submit", value="Save Changes")
+
+    script(src="/js/student/edit-profile.js")

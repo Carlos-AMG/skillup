@@ -1,0 +1,25 @@
+extends ../layout/indexInStudents
+
+block contenido
+    h1 Student Profile
+
+    h2 #{student.fullName}
+
+    if student.profileImage
+      img(src=student.profileImage , alt="Profile picture", style="width: 150px; height: 150px;")
+    else
+      p No profile picture has been uploaded.
+
+    h3 Education:
+    p #{student.education}
+
+    h3 Curriculum Vitae (CV):
+    if student.cv
+      a(href=`api/cv/${student.id}` , target="_blank") View CV
+    else
+      p No CV has been uploaded.
+
+    p
+      a(href="/students/edit-profile") Edit profile
+
+

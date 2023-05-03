@@ -97,10 +97,10 @@ const generateOfferDetailsHTML = (offerDetails) => {
       <span class="font-normal"> ${offerDetails.modality}</span>
     </p>
     <p class=" font-extrabold text-2xl py-2">Start Date: 
-      <span class="font-normal"> ${offerDetails.startDate.toLocaleDateString()}</span>
+      <span class="font-normal"> ${new Date(offerDetails.startDate).toLocaleDateString()}</span>
     </p>
     <p class=" font-extrabold text-2xl py-2">Start Date: 
-      <span class="font-normal"> ${offerDetails.endDate.toLocaleDateString()}</span>
+      <span class="font-normal"> ${new Date(offerDetails.endDate).toLocaleDateString()}</span>
     </p>
   `;
 
