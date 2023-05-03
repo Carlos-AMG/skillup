@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 passport.use(
   "students-local",
   new LocalStrategy({ usernameField: "email", passReqToCallback: true}, async (req,email, password, done) => {
-    try {
+    try { 
       const student = await prisma.student.findUnique({ where: { email } });
 
       if (!student) {
