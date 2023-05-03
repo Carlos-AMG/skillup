@@ -12,6 +12,11 @@ export const getAllCompanies = async () => {
   return companies
 }
 
+export const getAllStudents = async () => {
+  const students = await prisma.student.findMany()
+  return students
+}
+
 export const parseDate = (dateString) => {
   return new Date(dateString);
 };
