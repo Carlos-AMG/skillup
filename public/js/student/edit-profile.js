@@ -7,14 +7,14 @@ editProfileForm.addEventListener('submit', async (e) => {
   const formData = new FormData(editProfileForm);
   console.log("formData: ",formData)
   try {
-    const response = await axios.put('/api/edit-profile', formData, {
+    const response = await axios.put('api/edit-profile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
 
     if (response.status === 200) {
-      window.location.href = '/student/profile';
+      window.location.href = '/students/profile';
     } else {
       alert('Error updating the profile');
     }

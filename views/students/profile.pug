@@ -1,21 +1,6 @@
 extends ../layout/indexInStudents
 
 block contenido
-    //-.container
-      h1 Student Profile
-
-      .profile-info
-        img.profile-image(src=student.profileImage, alt="Profile Image")
-        h2= student.fullName
-        p Email: #{student.email}
-        p Education: #{student.education}
-        p Link: 
-          a(href=student.link)= student.link
-
-      .cv-section
-        h3 Curriculum Vitae
-        a.cv-link(href=student.cv, download) Download CV
-
     h1 Student Profile
 
     h2 #{student.fullName}

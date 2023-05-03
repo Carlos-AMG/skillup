@@ -216,7 +216,7 @@ export const getStudentImage = async (req, res, next) => {
 export const getStudentCv = async (req, res, next) => {
   try {
     const studentId = req.params.studentId;
-    const cvPath = path.join(__dirname, '..', 'uploads', 'cvs', `${studentId}.pdf`); // Asegúrate de cambiar la extensión si es necesario
+    const cvPath = path.join(__dirname, '..', 'uploads', 'cvs', `${studentId}.pdf`); 
 
     if (fs.existsSync(cvPath)) {
       res.sendFile(cvPath);
