@@ -8,6 +8,7 @@ import authRouter from './routes/auth.js';
 import session from 'express-session';
 import passport from './config/passport.js';
 import flash from 'connect-flash';
+import adminRouter from './routes/admin.js';
 
 const app = express();
 
@@ -41,6 +42,8 @@ app.use("/", authRouter);
 app.use('/students',studentRoutes)
 
 app.use('/companies',companyRoutes)
+
+app.use("/admin", adminRouter)
 
 
 
