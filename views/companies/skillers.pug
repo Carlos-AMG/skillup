@@ -1,3 +1,11 @@
 extends ../layout/indexInCompanies
 block contenido
     h1.text-center.text-4xl.font-bold Skillers
+
+    if skillers 
+        each skiller in skillers 
+            div
+                h2= skiller.job ? skiller.job.title : skiller.course.title
+                h3= skiller.student.fullName
+                p= skiller.student.email  
+                a(href=`/students/api/cv/${skiller.student.id}` , target="_blank") View CV

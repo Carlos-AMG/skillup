@@ -31,8 +31,14 @@ export const getProfilePage = async (req,res) => {
 export const getSkillers= async(req,res)=>{
     
     try {
-        let skillers = await prisma.interestedJobStudent.findMany()
-        
+        let skillers = await prisma.interestedJobStudent.findMany({
+            include:{
+                student:true,
+                job:true,
+            }
+        })
+    
+        console.log(skillers)
         res.render('companies/skillers',{
             pagina:"Skillers",
             skillers
