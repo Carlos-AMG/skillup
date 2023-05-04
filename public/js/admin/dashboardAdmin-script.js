@@ -1,7 +1,17 @@
-const filterAreaSelect = document.querySelector("#filter-company-student");
+window.onload = () => {
+    const filterAreaSelect = document.querySelector("#filter-company-student")
+    const companiesList = document.querySelector("#companies-list")
+    const studentsList = document.querySelector("#students-list")
 
-let currentFilterCompanyStudent = filterJobCourseSelect.value;
-let currentFilterArea = filterAreaSelect.value === "all" ? null : filterAreaSelect.value;
-
-filterJobCourseSelect.addEventListener("change", updateFilterAndFetchOffers((value) => currentFilterCompanyStudent = value));
-
+    filterAreaSelect.addEventListener('change', () => {
+        const selectedOption = filterAreaSelect.value;
+        // console.log(`Selected option: ${selectedOption}`);
+        if (selectedOption === "company"){
+            companiesList.style.display = "block"
+            studentsList.style.display = "none"
+        }else if (selectedOption === "student") {
+            companiesList.style.display = "none"
+            studentsList.style.display = "block"
+        }
+    });
+}
