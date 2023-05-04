@@ -15,14 +15,14 @@ export const getProfilePage = async (req, res) => {
     const student = await prisma.student.findUnique({
       where: { id: studentId },
     });
-
+ 
     if (!student) {
       res.status(404).send("Student not found");
       return;
     }
     console.log(student)
 
-    res.render("students/profile", { student,studentId});
+    res.render("students/profile", { student,studentId,pagina:"Profile"});
     
   } catch (error) {
     console.error("Error fetching student data:", error);
