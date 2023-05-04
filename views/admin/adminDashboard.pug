@@ -26,13 +26,17 @@ html(lang="es")
                     window.students = !{JSON.stringify(students)};
                     window.companies = !{JSON.stringify(companies)};
                 script(src="/js/admin/dashboardAdmin-script.js")
-                    
-                ul#companies-list
-                    each company in companies
-                        li= company.name
-                        //- style.display: block
-                ul#students-list
-                    each student in students
-                        li= student.fullName
-                        //- style.display: block
-                    //- filterAreaSelect = 
+
+                div.bg-blue  
+                    ul#companies-list
+                        each company in companies
+                            li(id=`company-${company.id}`)
+                                div 
+                                    h1.px-2= company.name
+                                    h2.px-2 RFC:  #{company.rfc}
+                                button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button") Verify
+                                button.bg-red-500.text-black.py-2.px-4.rounded-md(type="button") Decline
+                    ul#students-list
+                        each student in students
+                            li
+                                span.px-2=student.fullName
