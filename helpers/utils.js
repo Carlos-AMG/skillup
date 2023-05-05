@@ -7,6 +7,16 @@ export const getAllAreas = async () => {
   return areas;
 };
 
+export const getAllCompanies = async () => {
+  const companies = await prisma.company.findMany()
+  return companies
+}
+
+export const getAllStudents = async () => {
+  const students = await prisma.student.findMany()
+  return students
+}
+
 export const parseDate = (dateString) => {
   return new Date(dateString);
 };
