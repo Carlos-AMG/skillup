@@ -49,6 +49,12 @@ export const getSkillers= async(req,res)=>{
     }
 
 }
+
+export const getDashboardPage = async (req,res,next)=>{
+    res.render('companies/dashboard',{
+        pagina:"Dashboard"
+    })
+}
 //API
 export const createJob = async (req,res)=>{
     try{

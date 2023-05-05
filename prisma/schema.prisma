@@ -74,6 +74,8 @@ model InterestedJobStudent {
   studentId String
   job      Job     @relation(fields: [jobId], references: [id])
   jobId    String
+
+  @@unique([studentId, jobId])
 }
 
 model InterestedCourseStudent {
@@ -82,7 +84,10 @@ model InterestedCourseStudent {
   studentId String
   course   Course  @relation(fields: [courseId], references: [id])
   courseId String
+
+  @@unique([studentId, courseId])
 }
+
 
 model Area {
   id     String   @id @default(uuid())
