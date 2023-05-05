@@ -1,42 +1,45 @@
 doctype html
 html(lang="es")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title SkillUp Admin
-        link(rel="stylesheet", href="/css/app.css")
-        link(rel="stylesheet", href="/css/styles.css")
-        
-    body.min-h-screen.bg-gray-50
-        main(class="mx-auto container mt-10 px-2")
-            include ../partials/logo
-            br    
-            block contenido
-                .mb-5
-                    h1.text-center.text-4xl.font-bold Admin Dashboard
-                .container.pt-2
-                    //- Section 1: Filters
-                    div#filter-section(class="mb-2 pt-2 w-full flex justify-center space-x-8")
-                        select#filter-company-student(class="py-2 px-2 rounded-lg border-4 border-green-500")
-                            option(value="company") Companies
-                            option(value="student") Students
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title SkillUp Admin
+    link(rel="stylesheet", href="/css/app.css")
+    link(rel="stylesheet", href="/css/styles.css")
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
 
-                script.
-                    window.students = !{JSON.stringify(students)};
-                    window.companies = !{JSON.stringify(companies)};
-                script(src="/js/admin/dashboardAdmin-script.js")
+  body.min-h-screen.bg-gray-50
+    main(class="mx-auto container mt-10 px-2")
+      include ../partials/logo
+      br
+      block contenido
+        .mb-5
+          h1.text-center.text-4xl.font-bold Admin Dashboard
+        .container.pt-2
+          //- Section 1: Filters
+          div#filter-section(class="mb-2 pt-2 w-full flex justify-center space-x-8")
+            select#filter-company-student(class="py-2 px-2 rounded-lg border-4 border-green-500")
+              option(value="company") Companies
+              option(value="student") Students
 
-                div.bg-blue  
-                    ul#companies-list
-                        each company in companies
-                            li(id=`company-${company.id}`)
-                                div 
-                                    h1.px-2= company.name
-                                    h2.px-2 RFC:  #{company.rfc}
-                                button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button") Verify
-                                button.bg-red-500.text-black.py-2.px-4.rounded-md(type="button") Decline
-                    ul#students-list
-                        each student in students
-                            li
-                                span.px-2=student.fullName
+        //-    script.
+          window.students = !{JSON.stringify(students)};
+          window.companies = !{JSON.stringify(companies)};
+
+        div.bg-blue
+          ul#companies-list
+            each company in companies
+              li(id=`company-${company.id}` class="border border-solid border-black border-1")
+                h1.px-2= company.name
+                h2.px-2 RFC:  #{company.rfc}
+                form(action=`/admin/verify/${company.id}` method="POST")
+                  button.bg-green-500.text-white.py-2.px-4.rounded-md(type="submit" class="verify" data-company-id=company.id) Verify
+                form(action=`/admin/decline/${company.id}` method="POST")
+                  button.bg-red-500.text-black.py-2.px-4.rounded-md(type="submit" class="decline") Decline
+          ul#students-list
+            each student in students
+              li
+                span.px-2=student.fullName
+
+  script(src="/js/admin/dashboardAdmin-script.js")
