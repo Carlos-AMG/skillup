@@ -23,10 +23,6 @@ html(lang="es")
               option(value="company") Companies
               option(value="student") Students
 
-        //-    script.
-          window.students = !{JSON.stringify(students)};
-          window.companies = !{JSON.stringify(companies)};
-
         div.bg-blue
           ul#companies-list
             each company in companies

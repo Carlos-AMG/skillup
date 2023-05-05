@@ -51,9 +51,18 @@ export const getSkillers= async(req,res)=>{
 }
 
 export const getDashboardPage = async (req,res,next)=>{
-    res.render('companies/dashboard',{
-        pagina:"Dashboard"
-    })
+    try {
+        const areas = await getAllAreas();
+        res.render('companies/dashboard',{
+            userType:"companies",
+            areas,
+            pagina:"Dashboard",
+        })
+      } catch (error) {
+        console.error('Error while calling getAllAreas:', error);
+        res.send(500).send('internal server error');
+      }
+
 }
 //API
 export const createJob = async (req,res)=>{
