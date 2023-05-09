@@ -1,11 +1,11 @@
 import express from 'express'
-import{getDashboardPage} from '../controllers/admin.js'
-import { upload } from '../middlewares/upload.js';
+import{getDashboardPage, verifyCompany} from '../controllers/admin.js'
 
 const adminRouter = express.Router();
 
 //Render
 
-adminRouter.get("/:password",getDashboardPage);
+adminRouter.get("/:password", getDashboardPage);
+adminRouter.post("/", verifyCompany)
 
 export default adminRouter;

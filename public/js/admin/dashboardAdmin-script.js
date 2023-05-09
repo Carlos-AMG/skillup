@@ -1,12 +1,8 @@
-import { error } from "console"
-import { verify } from "crypto"
-import { response } from "express"
 
 window.onload = () => {
     const filterAreaSelect = document.querySelector("#filter-company-student")
     const companiesList = document.querySelector("#companies-list")
     const studentsList = document.querySelector("#students-list")
-
 
     companiesList.style.display = "block"
     studentsList.style.display = "none"
@@ -25,7 +21,7 @@ window.onload = () => {
 
     companiesList.addEventListener("click", (event) => {
         // we'll use event capturing so that all buttons inside companiesList have click event listener 
-        if (event.target.clasList.contains("verify")){
+        if (event.target.classList.contains("verify")){
             // create post request to /admin/
             fetch("/admin", {
                 method: "POST",
@@ -33,7 +29,7 @@ window.onload = () => {
                 headers: {"content-type" : "application/json"}
             }).then (response => response.json()).then(data => { if (data.success) { 
                 event.target.parentElement.remove()
-            }}).catch(err => console.error(error))
+            }}).catch(err => console.log('This is the error', err))
         }
     })
 }
