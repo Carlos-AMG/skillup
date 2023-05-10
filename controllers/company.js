@@ -80,7 +80,8 @@ export const createJob = async (req,res)=>{
         })
         console.log(newJob)
 
-        res.status(201).json(newJob)
+        req.flash('success', 'Job successfully created!');
+        res.redirect('/companies/dashboard');
     }catch(error){
         console.log(error)
         res.status(500).send("Error in creating the job")
@@ -100,7 +101,8 @@ export const createCourse = async (req,res)=>{
             }
         })
 
-        res.status(201).json(newCourse)
+        req.flash('success', 'Course successfully created!');
+        res.redirect('/companies/dashboard');
     }catch(error){
         console.log(error)
         res.status(500).send("Error in creating the course")
