@@ -20,7 +20,7 @@ export const getAllStudents = async () => {
 export const parseDate = (dateString) => {
   return new Date(dateString);
 };
-
+/*
 export const getAllOffers = async (offerType,areaId,page, limit) => {
     try {
       const where = {};
@@ -52,6 +52,6 @@ export const getAllOffers = async (offerType,areaId,page, limit) => {
       throw error;
     }
   };
-  
+  */
 
 

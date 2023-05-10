@@ -57,6 +57,7 @@ export const getDashboardPage = async (req,res,next)=>{
             userType:"companies",
             areas,
             pagina:"Dashboard",
+            companyId: req.user.id
         })
       } catch (error) {
         console.error('Error while calling getAllAreas:', error);

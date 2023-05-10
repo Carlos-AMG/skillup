@@ -4,7 +4,8 @@ block contenido
     if success.length > 0
         div.bg-green-500.text-white.font-bold.py-2.px-4.rounded(id="alert")
             = success
-
+    input(type='hidden' id='company-id' value=companyId)
+    - console.log(companyId)
     include ../partials/dashboardContent
     script(src="/js/company/dashboard-script.js") 
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
-import { getAllAreas, getAllOffers} from "../helpers/utils.js";
+import { getAllAreas} from "../helpers/utils.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -137,7 +137,7 @@ export const getOfferDetails = async (req, res) => {
     }
   };
   
-  export const postInterest = async (req, res, next) => {
+export const postInterest = async (req, res, next) => {
     const { offerType, offerId } = req.params;
     let interestType, data;
   
