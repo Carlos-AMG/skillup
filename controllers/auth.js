@@ -53,8 +53,25 @@ export const postSignIn = (req, res, next) => {
 
   //SignUp handlers
 export const registerUser = async (req, res) => {
+    const {fullName, email, password} = req.body
     const errors = validationResult(req);
     const userType = req.params.userType;
+    const usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9-_]{3,20}$/
+
+    // regex to check secure username, must refactor this to validation rules
+    if (!usernameRegex.test(fullName)){
+      errors.errors.push({
+        type: 'field',  
+        value: '',
+        msg: 'Username must be between 3 and 20 characters long and can only contain letters (lowercase or uppercase), numbers, underscores, and hyphens.',
+        path: 'fullName',
+        location: 'body'
+      })
+    }
+
+    // console.log(req.params)
+    // console.log(req.body)
+    console.log(errors)
 
     if (!errors.isEmpty()) {
       return res.status(422).render(`${userType}/signup`, {
@@ -73,12 +90,15 @@ export const registerUser = async (req, res) => {
       });
   
       req.login(user, (err) => {
-        if (err) throw err;
+        if (err){
+          console.log(err)
+          throw err;
+        }
         res.redirect(`/${userType}/login`);
       });
     } catch (error) {
         console.log(error)
-      res.status(500).json({ message: "Error al crear la cuenta" });
+        res.status(500).json({ message: "Error al crear la cuenta" });
     }
   };
 
