@@ -44,10 +44,11 @@ const createOfferCard = (offer) => {
 const fetchOffers = async () => {
   try {
     const response = await fetch(
-      `api/offer-cards/${currentFilterJobCourse}?page=${currentPage}&limit=${limit}&areaId=${currentFilterArea}`
+      `/api/offers/${currentFilterJobCourse}?page=${currentPage}&limit=${limit}&areaId=${currentFilterArea}`
     );
+    
     const offers = await response.json();
-
+      console.log(offers)
     offers.forEach((offer) => {
       offerSection.appendChild(createOfferCard(offer));
     });
@@ -115,7 +116,7 @@ const generateOfferDetailsHTML = (offerDetails) => {
 
 const fetchOfferDetails = async (offerId) => {
   try {
-    const response = await fetch(`api/offer-details/${currentFilterJobCourse}/${offerId}`);
+    const response = await fetch(`/api/offer-details/${currentFilterJobCourse}/${offerId}`);
     const offerDetails = await response.json();
 
     const infoOffer = generateOfferDetailsHTML(offerDetails);

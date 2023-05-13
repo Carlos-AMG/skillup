@@ -1,3 +1,4 @@
+
 import {getAllCompanies, getAllStudents} from "../helpers/utils.js";
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();

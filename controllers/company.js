@@ -28,10 +28,49 @@ export const getProfilePage = async (req,res) => {
     })
 }
 
+export const getSkillers= async(req,res)=>{
+    
+    try {
+        let skillers = await prisma.interestedJobStudent.findMany({
+            include:{
+                student:true,
+                job:true,
+            }
+        })
+    
+        ///-console.log(skillers)
+        res.render('companies/skillers',{
+            pagina:"Skillers",
+            skillers
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+export const getDashboardPage = async (req,res,next)=>{
+    try {
+        const areas = await getAllAreas();
+        res.render('companies/dashboard',{
+            userType:"companies",
+            areas,
+            pagina:"Dashboard",
+            companyId: req.user.id
+        })
+      } catch (error) {
+        console.error('Error while calling getAllAreas:', error);
+        res.send(500).send('internal server error');
+      }
+
+}
 //API
 export const createJob = async (req,res)=>{
     try{
         const {salary,hoursPerWeek,...restOfBody} = req.body
+        console.log('Company id: ', req.user.id)
+
         const newJob = await prisma.job.create({
             data:{
                 companyId:req.user.id,
@@ -40,8 +79,10 @@ export const createJob = async (req,res)=>{
                 hoursPerWeek: parseInt(hoursPerWeek),
             }
         })
+        console.log(newJob)
 
-        res.status(201).json(newJob)
+        req.flash('success', 'Job successfully created!');
+        res.redirect('/companies/dashboard');
     }catch(error){
         console.log(error)
         res.status(500).send("Error in creating the job")
@@ -61,7 +102,8 @@ export const createCourse = async (req,res)=>{
             }
         })
 
-        res.status(201).json(newCourse)
+        req.flash('success', 'Course successfully created!');
+        res.redirect('/companies/dashboard');
     }catch(error){
         console.log(error)
         res.status(500).send("Error in creating the course")

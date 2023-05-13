@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import studentRoutes from './routes/student.js';
 import companyRoutes from './routes/company.js'
+import offersRouter from './routes/offers.js';
 import authRouter from './routes/auth.js';
 import session from 'express-session';
 import passport from './config/passport.js';
@@ -25,6 +26,7 @@ app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 
@@ -38,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/",(req,res) => res.render("layout/main"))
 
 app.use("/", authRouter);
+
+app.use("/",offersRouter)
 
 app.use('/students',studentRoutes)
 

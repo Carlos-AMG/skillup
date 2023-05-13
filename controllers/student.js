@@ -1,9 +1,12 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
-import { getAllAreas, getAllOffers} from "../helpers/utils.js";
+import { getAllAreas} from "../helpers/utils.js";
 import path from 'path';
-import fs from 'node:fs/promises';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const getProfilePage = async (req, res) => {
   try {
@@ -12,13 +15,15 @@ export const getProfilePage = async (req, res) => {
     const student = await prisma.student.findUnique({
       where: { id: studentId },
     });
-
+ 
     if (!student) {
       res.status(404).send("Student not found");
       return;
     }
+    console.log(student)
 
-    res.render("students/profile", { student });
+    res.render("students/profile", { student,studentId,pagina:"Profile"});
+    
   } catch (error) {
     console.error("Error fetching student data:", error);
     res.status(500).send("Error fetching student data");
@@ -60,7 +65,35 @@ export const getEditProfilePage = async (req, res) => {
 
 
 export const getUpsPage = async (req,res) => {
-    res.render('students/my-ups')
+  try { let myUps=[]
+    const myUpsCourse= await prisma.InterestedCourseStudent.findMany({
+      where:{
+        studentId:req.user.id
+      }
+      ,include: {
+        course:true
+      }
+    })
+    const myUpsJobs= await prisma.InterestedJobStudent.findMany({
+      where:{
+        studentId:req.user.id
+      }
+      ,include: {
+        job:true
+      }
+    })
+    console.log(myUpsCourse)
+    console.log(myUpsJobs)
+    res.render('students/my-ups',{
+      pagina: 'My Ups',
+      myUpsCourse,
+      myUpsJobs
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }  
+  
 }
 
 //API
@@ -104,7 +137,7 @@ export const getOfferDetails = async (req, res) => {
     }
   };
   
-  export const postInterest = async (req, res, next) => {
+export const postInterest = async (req, res, next) => {
     const { offerType, offerId } = req.params;
     let interestType, data;
   
@@ -129,6 +162,7 @@ export const getOfferDetails = async (req, res) => {
       const interest = await prisma[interestType].create({
         data,
       });
+      console.log(interest)
       res.status(201).json({ message: "Interest registered", interest });
     } catch (err) {
       console.error("Error while registering interest:", err);
