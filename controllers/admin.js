@@ -23,9 +23,9 @@ export const verifyCompany = async (req, res) => {
         where: { id: companyId },
         data: { verified: true },
       });
-      res.status(200).json(updatedCompany);
+      res.status(200).json({message: 'Company verified successfully', updatedCompany});
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Something went wrong.' });
+      res.status(500).json({message: 'Error verifying company', erorr});
     }
 }

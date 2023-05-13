@@ -59,7 +59,7 @@ export const registerUser = async (req, res) => {
     
     // console.log(req.params)
     // console.log(req.body)
-    console.log(errors)
+    // console.log(errors)
 
     if (!errors.isEmpty()) {
       return res.status(422).render(`${userType}/signup`, {
