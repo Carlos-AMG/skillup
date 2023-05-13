@@ -23,19 +23,17 @@ html(lang="es")
               option(value="company") Companies
               option(value="student") Students
 
-        div.bg-blue
-          ul#companies-list
-            each company in companies
-              li(id=`company-${company.id}` class="border border-solid border-black border-1")
-                h1.px-2= company.name
-                h2.px-2 RFC:  #{company.rfc}
-                form(action=`/admin/verify/${company.id}` method="POST")
-                  button.bg-green-500.text-white.py-2.px-4.rounded-md(type="submit" class="verify" data-company-id=company.id) Verify
-                form(action=`/admin/decline/${company.id}` method="POST")
-                  button.bg-red-500.text-black.py-2.px-4.rounded-md(type="submit" class="decline") Decline
-          ul#students-list
-            each student in students
-              li
-                span.px-2=student.fullName
+                div.bg-blue  
+                    ul#companies-list
+                        each company in companies
+                            li(id=`company-${company.id}`)
+                                div 
+                                    h1.px-2= company.name
+                                    h2.px-2 RFC:  #{company.rfc}
+                                button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button" class="verify" data-company-id=company.id) Verify
+                                button.bg-red-500.text-black.py-2.px-4.rounded-md(type="button" class="decline" data-company-id=company.id) Decline
+                    ul#students-list
+                        each student in students
+                            li
+                                span.px-2=student.fullName
 
-  script(src="/js/admin/dashboardAdmin-script.js")
