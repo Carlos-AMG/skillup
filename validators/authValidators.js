@@ -5,16 +5,17 @@ export const signUpStudent = [
     .isLength({ min: 3, max: 20 }).withMessage('Name must be between 3 and 20 characters long')
     .matches(/^(?=.*[a-zA-Z])[a-zA-Z0-9-_]{3,20}$/)
     .withMessage('Name can only contain letters (lowercase or uppercase), numbers, underscores, and hyphens'),
-    
   check("email")
     .notEmpty().withMessage("Email is required")
     .isEmail().withMessage("Valid email is required"),
   check("education")
     .notEmpty().withMessage("Education is required"),
   check("password")
-    .notEmpty().withMessage("Password is required")
+    .notEmpty().withMessage('Password is required')
     .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
+    .withMessage('Password must be at least 6 characters long')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()\-_=+{}[\]|;:'",.<>/?\\]{6,}$/)
+    .withMessage('Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character'),
 ];
 
 
