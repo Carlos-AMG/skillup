@@ -117,7 +117,7 @@ const generateOfferDetailsHTML = (offerDetails) => {
   
     const companyActions = state.userType === "companies" ? `
       <div class="py-2">
-        <a href="/companies/delete-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-red-500 text-white uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">Delete </a>
+      <button id="deleteButton" data-offer-id="${offerDetails.id}" data-offer-type="${state.currentFilterJobCourse}" class="px-5 bg-red-500 text-white uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">Delete </button>
         <a href="/companies/edit-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-yellow-500 text-white uppercase hover:bg-yellow-700 font-bold py-3 cursor-pointer rounded-md">Update </a>
         <a href="/companies/skillers/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-blue-500 text-white uppercase hover:bg-blue-700 font-bold py-3 cursor-pointer rounded-md">Skillers</a>
       </div>
@@ -134,6 +134,7 @@ const fetchOfferDetails = async (offerId) => {
 
     const infoOffer = generateOfferDetailsHTML(offerDetails);
     descriptionSection.innerHTML = infoOffer;
+    deleteOffer()
   } catch (error) {
     console.error("Error fetching job details:", error);
     }
@@ -147,3 +148,22 @@ const fetchOfferDetails = async (offerId) => {
     
     // Load the initial set of jobs.
     fetchOffers();
+
+const deleteOffer = () =>{
+    document.getElementById('deleteButton').addEventListener('click', function() {
+      const offerId = this.getAttribute('data-offer-id');
+      const offerType = this.getAttribute('data-offer-type');
+      axios.delete('delete-offer/' + offerType + '/' + offerId)
+          .then(function (response) {
+              // handle success
+              console.log(response);
+             
+          })
+          .catch(function (error) {
+              // handle error
+              console.log(error);
+              alert('Failed to delete');
+          });
+          location.href = "/companies/dashboard"
+  });
+}

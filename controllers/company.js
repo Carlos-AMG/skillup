@@ -184,24 +184,33 @@ export const updateJob = async (req, res) => {
   
   export const deleteOffer = async (req, res) => {
     const { offerType, offerId } = req.params;
-
     try {
-        // Check if the offer type is valid
-        if (offerType !== 'job' && offerType !== 'course') {
-            return res.status(400).json({ error: 'Invalid offer type' });
-        }
+        // If offerType is job
+        if (offerType === 'job') {
+            // Deleting all the relationships of this job with the students
+            await prisma.interestedJobStudent.deleteMany({
+                where: { jobId: offerId }
+            });
 
-        // Check if the offer belongs to the authenticated company
-        const offer = await prisma[offerType].findUnique({ where: { id: offerId } });
-        if (!offer) {
-            return res.status(404).json({ error: 'Offer not found' });
+            // Deleting the job itself
+            await prisma.job.delete({
+                where: { id: offerId },
+            });
         }
-        if (offer.companyId !== req.user.id) {
-            return res.status(403).json({ error: 'You do not have permission to delete this offer' });
-        }
+        // If offerType is course
+        else if (offerType === 'course') {
+            // Deleting all the relationships of this course with the students
+            await prisma.interestedCourseStudent.deleteMany({
+                where: { courseId: offerId }
+            });
 
-        // Delete the offer
-        await prisma[offerType].delete({ where: { id: offerId } });
+            // Deleting the course itself
+            await prisma.course.delete({
+                where: { id: offerId },
+            });
+        } else {
+            return res.status(400).json({ error: "Invalid offer type" });
+        }
 
         req.flash('success', 'Offer successfully deleted!');
         res.redirect('/companies/dashboard');
@@ -209,4 +218,4 @@ export const updateJob = async (req, res) => {
         console.log(error);
         res.status(500).send("Error in deleting the offer");
     }
-};
+}
