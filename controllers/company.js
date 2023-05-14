@@ -27,26 +27,35 @@ export const getProfilePage = async (req,res) => {
         pagina:"Offers"
     })
 }
-
-export const getSkillers= async(req,res)=>{
+export const getSkillersPage= async(req,res)=>{
     
-    try {
-        let skillers = await prisma.interestedJobStudent.findMany({
+   const {offerType,offerId} = req.params;
+   try{
+    let skillers;
+    if(offerType == "job"){
+         skillers = await prisma.interestedJobStudent.findMany({
+            where:{
+                jobId:offerId
+            },
             include:{
-                student:true,
-                job:true,
+                student:true
             }
         })
-    
-        ///-console.log(skillers)
-        res.render('companies/skillers',{
-            pagina:"Skillers",
-            skillers
+    }else{
+         skillers = await prisma.interestedCourseStudent.findMany({
+            where:{
+                courseId:offerId
+            },
+            include:{
+                student:true
+            }
         })
-
-    } catch (error) {
-        console.log(error)
     }
+
+    res.render('companies/skillers',{skillers})
+   }catch(err){
+    console.log(err)
+   }
 
 }
 
@@ -63,6 +72,24 @@ export const getDashboardPage = async (req,res,next)=>{
         console.error('Error while calling getAllAreas:', error);
         res.send(500).send('internal server error');
       }
+
+}
+
+export const getEditFormPage = async (req,res) =>{
+    const {offerType,offerId} = req.params;
+
+    try{
+        const areas = await getAllAreas();
+        const offer = await prisma[offerType].findUnique({
+            where:{
+                id:offerId,
+            }
+        })
+
+        res.render(`companies/edit-${offerType}`,{offer,areas})
+    }catch(err){
+        console.log(err)
+    }
 
 }
 //API
@@ -111,3 +138,75 @@ export const createCourse = async (req,res)=>{
 
 }
 
+export const updateJob = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { salary, hoursPerWeek, ...restOfBody } = req.body;
+  
+      const updatedJob = await prisma.job.update({
+        where: { id },
+        data: {
+          ...restOfBody,
+          salary: parseInt(salary),
+          hoursPerWeek: parseInt(hoursPerWeek),
+        },
+      });
+  
+      req.flash('success', 'Job successfully updated!');
+      res.redirect('/companies/dashboard');
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error in updating the job");
+    }
+  };
+  
+  export const updateCourse = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { startDate, endDate, ...restOfBody } = req.body;
+  
+      const updatedCourse = await prisma.course.update({
+        where: { id },
+        data: {
+          ...restOfBody,
+          startDate: parseDate(startDate),
+          endDate: parseDate(endDate),
+        },
+      });
+  
+      req.flash('success', 'Course successfully updated!');
+      res.redirect('/companies/dashboard');
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error in updating the course");
+    }
+  };
+  
+  export const deleteOffer = async (req, res) => {
+    const { offerType, offerId } = req.params;
+
+    try {
+        // Check if the offer type is valid
+        if (offerType !== 'job' && offerType !== 'course') {
+            return res.status(400).json({ error: 'Invalid offer type' });
+        }
+
+        // Check if the offer belongs to the authenticated company
+        const offer = await prisma[offerType].findUnique({ where: { id: offerId } });
+        if (!offer) {
+            return res.status(404).json({ error: 'Offer not found' });
+        }
+        if (offer.companyId !== req.user.id) {
+            return res.status(403).json({ error: 'You do not have permission to delete this offer' });
+        }
+
+        // Delete the offer
+        await prisma[offerType].delete({ where: { id: offerId } });
+
+        req.flash('success', 'Offer successfully deleted!');
+        res.redirect('/companies/dashboard');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error in deleting the offer");
+    }
+};

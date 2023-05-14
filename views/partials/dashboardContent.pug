@@ -2,6 +2,9 @@
   h1.text-center.text-4xl.font-bold Dash
     span.font-normal Board
 .container.pt-2
+  if success.length > 0
+        div.bg-green-500.text-white.font-bold.py-2.px-4.rounded(id="alert")
+          = success
   //- Section 1: Filters
   div#filter-section(class="mb-10 pt-2 w-full flex justify-center space-x-8")
     select#filter-job-course(class="py-3 px-3 rounded-lg border-4 border-green-500")
@@ -13,8 +16,13 @@
       each area in areas
         option(value=area.id)= area.name
   div(class="grid gap-4 grid-cols-3 mt-5 pt-10")
-    #offers-section(style="overflow-y: scroll; height: 500px;" class="flex flex-col flex-nowrap justify-between items-stretch overflow-x-auto col-span-1")
+    #offers-section(style="overflow-y: scroll; height: 500px;" class="flex flex-col flex-nowrap justify-between justify-items-center items-stretch overflow-x-auto col-span-1 px-10")
     .description-section(class="col-span-2")
       h2(class="text-4xl font-bold text-center")
+  //-div(class="grid gap-4 grid-cols-3 mt-5 pt-10")
+    #offers-section(style="overflow-y: scroll; height: 500px;" class="flex flex-col flex-nowrap justify-between items-stretch overflow-x-auto col-span-1")
+    .description-section
+      h2(class="text-4xl font-bold text-center")
+
 
 script(src="/js/dashboard-script.js") 

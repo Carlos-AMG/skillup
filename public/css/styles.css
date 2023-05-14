@@ -44,15 +44,16 @@ h4 {
 .card {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 20px;
-    max-width: 300px;
+    margin: 20px ;
+    
+    width: 80%;
     cursor: pointer;
   }
   
@@ -76,9 +77,19 @@ h4 {
     margin: 10px 0;
   }
   
-/* #offers-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
+  #offers-section {
+    grid-column: span 3;
+  }
+  
+  @media (min-width:768px ) {
+    #offers-section {
+      grid-column: span 1;
+    }
+  `/*  .description-section {
+
+        grid-column: span 2;
+    }*/
+
+
+  }
+  

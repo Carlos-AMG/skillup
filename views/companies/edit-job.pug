@@ -1,0 +1,55 @@
+extends ../layout/indexInCompanies
+block contenido
+
+    .mb-5
+        h1.text-center.text-4xl.font-bold Edit Job 
+            span.font-normal Offer
+
+
+        div#jobForm
+            h2(class="text-center text-2xl font-extrabold text-sky-900 mt-2 mb-2") Job Form
+            .mt-0.mx-auto.max-w-md 
+            .bg-white.py-8.px-4.shadow
+                form(action=`/companies/update-job/${offer.id}` method="POST" class="text-black")
+
+                    div
+                        label(for="title" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Tittle:
+                        input(type="text" name="title" id="title" required placeholder="Tittle" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 text-black" value=offer.title)
+                
+                    div.pt-5
+                        label(for="description" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Description:
+                        textarea(name="description" id="description" required placeholder="Description" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" )= offer.description
+                        
+                    div.pt-5
+                        label(for="jobType" class="block text-x uppercase text-gray-500 mb-2 font-bold" ) Job Type:
+                        select#jobType(name="jobType" class="w-full px-3 py-2 border border-gray-300 rounded-md font-normal ")
+                            option(value="fullTime") Full-Time
+                            option(value="halfTime") Half-Time
+                            option(value="internship") Internship
+                    div.pt-5
+                        label(for="skills" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Skills:
+                        input(type="text" name="skills" id="skills" placeholder="Skills" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer.skills)
+                        
+                    div.pt-5
+                        label(for="modality" class="block text-x uppercase text-gray-500 mb-2 font-bold") Modality:
+                        select#modality(name="modality" class="w-full px-3 py-2 border border-gray-300 rounded-md font-normal" value=offer.modality)
+                            option(value="presential") Presential
+                            option(value="virtual") Virtual
+                            option(value="hybrid") Hybrid
+                        
+                    div.pt-5
+                        label(for="salary" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Salary:
+                        input(type="number" placeholder="Salary" name="salary" id="salary" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer.salary)
+                        
+                    div.pt-5
+                        label(for="hoursPerWeek" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Hours per week:
+                        input(type="number" placeholder="Hours per week" name="hoursPerWeek" id="hoursPerWeek" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer.hoursPerWeek)
+                        
+                    div.pt-5
+                        label(for="areaId"  class="block text-sm uppercase text-gray-500 mb-2 font-bold") Area:
+                        select(name="areaId" id="areaId" required class="w-full px-3 py-2 border border-gray-300 rounded-md")
+                            each area in areas
+                                option(value=area.id)= area.name
+                        
+                    div.pt-5
+                        input(type="submit" value="Update Job" class="w-full bg-sky-900 text-white uppercase hover:bg-sky-950 font-bold py-3 cursor-pointer rounded-md ") 

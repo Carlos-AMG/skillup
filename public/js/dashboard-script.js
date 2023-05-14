@@ -117,9 +117,9 @@ const generateOfferDetailsHTML = (offerDetails) => {
   
     const companyActions = state.userType === "companies" ? `
       <div class="py-2">
-        <a href="/delete-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-red-500 text-white uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">Delete Offer</a>
-        <a href="/update-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-yellow-500 text-white uppercase hover:bg-yellow-700 font-bold py-3 cursor-pointer rounded-md">Update Offer</a>
-        <a href="/see-students/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-blue-500 text-white uppercase hover:bg-blue-700 font-bold py-3 cursor-pointer rounded-md">See Interested Students</a>
+        <a href="/companies/delete-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-red-500 text-white uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">Delete </a>
+        <a href="/companies/edit-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-yellow-500 text-white uppercase hover:bg-yellow-700 font-bold py-3 cursor-pointer rounded-md">Update </a>
+        <a href="/companies/skillers/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-blue-500 text-white uppercase hover:bg-blue-700 font-bold py-3 cursor-pointer rounded-md">Skillers</a>
       </div>
     ` : "";
   
