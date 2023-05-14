@@ -185,26 +185,25 @@ export const updateJob = async (req, res) => {
   export const deleteOffer = async (req, res) => {
     const { offerType, offerId } = req.params;
     try {
-        // If offerType is job
+      
         if (offerType === 'job') {
-            // Deleting all the relationships of this job with the students
+
             await prisma.interestedJobStudent.deleteMany({
                 where: { jobId: offerId }
             });
 
-            // Deleting the job itself
+
             await prisma.job.delete({
                 where: { id: offerId },
             });
         }
-        // If offerType is course
+    
         else if (offerType === 'course') {
-            // Deleting all the relationships of this course with the students
+      
             await prisma.interestedCourseStudent.deleteMany({
                 where: { courseId: offerId }
             });
 
-            // Deleting the course itself
             await prisma.course.delete({
                 where: { id: offerId },
             });
