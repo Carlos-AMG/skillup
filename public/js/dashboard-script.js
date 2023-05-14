@@ -114,6 +114,12 @@ const generateOfferDetailsHTML = (offerDetails) => {
         <input type="submit" value="Up" class="px-5 bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md">
       </form>
     ` : "";
+
+    const expressDesinterestForm = state.userType === "students" ? `
+      <form class="py-2" id="express-desinterest-form" method="POST" action="api/express-desinterest/${state.currentFilterJobCourse}/${offerDetails.id}">
+        <input type="submit" value="Down" class="px-5 bg-red-500 text-black uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">
+      </form>
+    ` : "";
   
     const companyActions = state.userType === "companies" ? `
       <div class="py-2">
@@ -123,7 +129,7 @@ const generateOfferDetailsHTML = (offerDetails) => {
       </div>
     ` : "";
   
-    return commonInfo + jobInfo + expressInterestForm + companyActions;
+    return commonInfo + jobInfo + expressInterestForm + expressDesinterestForm + companyActions;
   
 };
 

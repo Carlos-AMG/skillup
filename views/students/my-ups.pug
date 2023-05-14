@@ -4,3 +4,10 @@ block contenido
     h1.text-center.text-4xl.font-normal My 
         span.font-bold Ups
 
+    h1 Jobs
+    each job in myUpsJobs
+        li= job.job.title
+    
+    h1 Courses 
+    each course in myUpsCourse
+        li= course.course.title

@@ -20,6 +20,27 @@ export const getAllStudents = async () => {
 export const parseDate = (dateString) => {
   return new Date(dateString);
 };
+
+export const checkIfUserLikedJob = async (userId, jobId) => {
+  const interestedJob = await prisma.interestedJobStudent.findFirst({
+    where: {
+      studentId: userId,
+      jobId: jobId,
+    }
+  })
+  return interestedJob
+}
+
+export const checkIfUserLikedCourse = async (userId, courseId) => {
+  const interestedCourse = await prisma.interestedCourseStudent.findFirst({
+    where: {
+      studentId: userId,
+      courseId: courseId,
+    }
+  })
+  return interestedCourse
+}
+
 /*
 export const getAllOffers = async (offerType,areaId,page, limit) => {
     try {

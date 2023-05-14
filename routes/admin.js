@@ -1,12 +1,13 @@
 import express from 'express'
-import{getDashboardPage,verifyCompany} from '../controllers/admin.js'
+import{getDashboardPage, verifyCompany} from '../controllers/admin.js'
 
 
 const adminRouter = express.Router();
 
 //Render
 
-adminRouter.get("/:password",getDashboardPage);
+adminRouter.get("/:password", getDashboardPage);
+adminRouter.post("/", verifyCompany)
 
 
 //API
