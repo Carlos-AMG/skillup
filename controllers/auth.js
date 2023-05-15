@@ -56,12 +56,38 @@ export const registerUser = async (req, res) => {
     const {fullName, email, password} = req.body
     const errors = validationResult(req);
     const userType = req.params.userType;
+    let existingAccount;
+
+    // check if email has already been used in either students or companies
     
-    // console.log(req.params)
-    // console.log(req.body)
-    // console.log(errors)
+    if (userType === "companies"){
+      existingAccount = await prisma.company.findFirst({
+        where: {
+          email
+        }
+      })
+    }else if (userType === "students"){
+      existingAccount = await prisma.student.findFirst({
+        where: {
+          email
+        }
+      })
+    }
+
+    let bool = false
+    if (existingAccount){
+      errors.errors.push({
+        type: 'field',
+        value: '',
+        msg: `Couldnt create user, ${email} has already been used`,
+        path: 'email',
+        location: 'body',
+      })
+      bool = true
+    }
 
     if (!errors.isEmpty()) {
+      // console.log(errors.array())
       return res.status(422).render(`${userType}/signup`, {
         type: userType,
         pagina: "SignUp",
