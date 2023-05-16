@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const getAllOffers = async (req, res, next) => {
     try {
-      const { offerType } = req.params;
+      let { offerType } = req.params;
       const { areaId, companyId  ,page = 1, limit = 10} = req.query;
 
       const where = {};
@@ -18,24 +18,59 @@ export const getAllOffers = async (req, res, next) => {
             where.companyId = companyId;
 
         }
-
-      const offers = await prisma[offerType].findMany({
-        skip: (page - 1) * limit,
-        take: parseInt(limit),
-        where,
-        include: {
-            area: {
-              select: {
-                name: true,
+      
+      let offers = []
+      
+      if (offerType === "all"){
+        offers.push(...(await prisma.job.findMany({
+          where,
+          include: {
+              area: {
+                select: {
+                  name: true,
+                },
               },
-            },
-            company: {
-              select: {
-                name: true,
+              company: {
+                select: {
+                  name: true,
+                },
               },
-            },
-        },
-      });
+          },
+        })))
+        offers.push(...(await prisma.course.findMany({
+          where,
+          include: {
+              area: {
+                select: {
+                  name: true,
+                },
+              },
+              company: {
+                select: {
+                  name: true,
+                },
+              },
+          },
+        })))
+      }else {
+        offers = await prisma[offerType].findMany({
+          skip: (page - 1) * limit,
+          take: parseInt(limit),
+          where,
+          include: {
+              area: {
+                select: {
+                  name: true,
+                },
+              },
+              company: {
+                select: {
+                  name: true,
+                },
+              },
+          },
+        });
+      }
 
       res.status(200).json(offers);
 
@@ -50,7 +85,32 @@ export const getOfferDetails = async (req, res) => {
     const { offerId,offerType } = req.params;
   
     try {
-      const offerDetails = await prisma[offerType].findUnique({
+
+      let offerDetails = []
+      if (offerType === "all"){
+        offerDetails.push((await prisma.job.findUnique({
+          where: {
+            id: offerId
+          }, include: {
+            company: true,
+            area: true
+          }
+        })))
+        offerDetails.push((await prisma.course.findUnique({
+          where: {
+            id: offerId
+          }, include: {
+            company: true,
+            area: true
+          }
+        })))
+
+        offerDetails = offerDetails.flatMap(details => details);
+        console.log(offerDetails) 
+        return res.status(200).json(offerDetails);
+      }
+
+      offerDetails = await prisma[offerType].findUnique({
         where: {
           id: offerId,
         },

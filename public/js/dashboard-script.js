@@ -173,3 +173,25 @@ const deleteOffer = () =>{
           location.href = "/companies/dashboard"
   });
 }
+
+// const selectOptions = document.querySelector("#filter-job-course").value;
+
+// const fetchAll = async ()=> {
+//   try {
+
+//     let url = `/api/offers/job?page=${state.currentPage}&limit=${state.limit}&areaId=${state.currentFilterArea}&companyId=${elems.companyId}`;
+//     let response = await fetch(url);
+//     let offers = await response.json();
+//     offers.forEach(offer => elems.offerSection.appendChild(createOfferCard(offer)));
+//     state.currentPage += 1;
+
+//     url = `/api/offers/course?page=${state.currentPage}&limit=${state.limit}&areaId=${state.currentFilterArea}&companyId=${elems.companyId}`;
+//     response = await fetch(url);
+//     offers = await response.json();
+//     offers.forEach(offer => elems.offerSection.appendChild(createOfferCard(offer)));
+//     state.currentPage += 1;
+//   } catch (error) {
+//     console.error("Error fetching offers:", error);
+//   }
+
+// }
