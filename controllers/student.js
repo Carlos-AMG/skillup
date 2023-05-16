@@ -165,19 +165,23 @@ export const postInterest = async (req, res, next) => {
     // const interestedJob = await checkIfUserLikedJob(data.studentId, data.jobId)
     // const interestedCourse = await checkIfUserLikedCourse(data.studentId, data.jobId)
 
-    console.log(interested)
+    // console.log(interested)
     // console.log(interestedCourse)
-
+    let interestType2 = interestType  === "InterestedJobStudent" ? "Job" : "Course"
     if (interested) {
       console.log("User has already liked that job/course")
+      req.flash("error", `${interestType2} has already been upped`)
+      res.redirect('/students/dashboard')
     }else {
       console.log("User has not liked the job/course")
       try {
         const interest = await prisma[interestType].create({
           data,
         })
-        console.log(interest)
-        res.status(201).json({message: "Interest registered", interest})
+
+
+        req.flash('success', 'Course succesfully updated')
+        res.redirect('/students/dashboard')
       } catch (err){
         console.error("Error while registering interest: ", err)
         res.status(500).json({message: "Error while registering interest"})
@@ -187,7 +191,9 @@ export const postInterest = async (req, res, next) => {
   };
 
 
-export const postDesinterest = async (req, res, next) => {}
+export const postDesinterest = async (req, res, next) => {
+
+}
   
 export const updateStudentProfile = async (req, res) => {
   const { fullName, education, studentId } = req.body;
