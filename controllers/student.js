@@ -136,55 +136,53 @@ export const getOfferDetails = async (req, res) => {
       res.status(500).json({ message: 'Error fetching offer details' });
     }
   };
-  
-export const postInterest = async (req, res, next) => {
-    const { offerType, offerId } = req.params;
-    let interestType, data;
-    let interested;
-  
-    if (offerType === "job") {
-      interestType = "InterestedJobStudent";
-      data = {
-        studentId: req.user.id,
-        jobId: offerId,
-      };
-      interested = await checkIfUserLikedJob(data.studentId, data.jobId)
-    } else if (offerType === "course") {
-      interestType = "InterestedCourseStudent";
-      data = {
-        studentId: req.user.id,
-        courseId: offerId,
-      };
-      interested = await checkIfUserLikedCourse(data.studentId, data.jobId)
-    } else {
-      res.status(400).json({ message: "Invalid offer type" });
-      return;
-    }
-
-    // check if it has already upped a post, if it has then exit else create relation
-    // const interestedJob = await checkIfUserLikedJob(data.studentId, data.jobId)
-    // const interestedCourse = await checkIfUserLikedCourse(data.studentId, data.jobId)
-
-    console.log(interested)
-    // console.log(interestedCourse)
-
-    if (interested) {
-      console.log("User has already liked that job/course")
-    }else {
-      console.log("User has not liked the job/course")
-      try {
-        const interest = await prisma[interestType].create({
-          data,
-        })
-        console.log(interest)
-        res.status(201).json({message: "Interest registered", interest})
-      } catch (err){
-        console.error("Error while registering interest: ", err)
-        res.status(500).json({message: "Error while registering interest"})
+  export const postInterest = async (req, res) => {
+    try {
+        const { offerType, offerId } = req.params;
+        
+        // Check if the student has already expressed interest
+      let obj;
+      if (offerType=='job'){
+        obj ={
+          studentId:req.user.id, jobId: offerId
+        }
+      }else{
+        obj ={
+          studentId:req.user.id, courseId: offerId
+        }
       }
-    }
 
-  };
+        const existingInterest = await prisma[`${offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'}`].findFirst({
+            where: {
+              ...obj
+            }
+        });
+
+        if (existingInterest) {
+          req.flash('error','You have already expressed interest in this offer.')
+          return res.redirect('/students/dashboard');
+
+        }
+
+        // Express interest
+        console.log("studentId: ",req.user.id)
+        const interest = await prisma[`${offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'}`].create({
+            data: {
+                studentId:req.user.id,
+                [`${offerType}Id`]: offerId,
+            }
+        });
+        req.flash('success','Express interest correctly')
+        res.redirect('/students/dashboard');
+
+    } catch (error) {
+        console.error('Error expressing interest:', error);
+        res.status(500).json({ error: 'An error occurred while expressing interest.' });
+    }
+}
+
+
+
 
 
 export const postDesinterest = async (req, res, next) => {}

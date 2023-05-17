@@ -5,6 +5,8 @@
   if success.length > 0
         div.bg-green-500.text-white.font-bold.py-2.px-4.rounded(id="alert")
           = success
+
+  include ../partials/_error
   //- Section 1: Filters
   div#filter-section(class="mb-10 pt-2 w-full flex justify-center space-x-8")
     select#filter-job-course(class="py-3 px-3 rounded-lg border-4 border-green-500")

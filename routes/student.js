@@ -18,7 +18,7 @@ studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
 studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
 studentRouter.post('/api/express-interest/:offerType/:offerId', postInterest);
-studentRouter.post('/api/express-desinterest/:offerType/:offerId', postDesinterest);
+//studentRouter.post('/api/express-desinterest/:offerType/:offerId', postDesinterest);
 
 studentRouter.put('/api/edit-profile', upload.fields([
   { name: 'profileImage', maxCount: 1 },

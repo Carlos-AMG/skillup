@@ -3,47 +3,68 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
 export const getAllOffers = async (req, res, next) => {
-    try {
+  try {
       const { offerType } = req.params;
-      const { areaId, companyId  ,page = 1, limit = 10} = req.query;
+      const { areaId, companyId, page = 1, limit = 10 } = req.query;
 
       const where = {};
 
+      if (areaId) {
+          where.areaId = areaId;
+      }
       
-        if (areaId) {
-            where.areaId = areaId;
-        }
-        
-        if (companyId != "null") {
-            where.companyId = companyId;
+      if (companyId !== "null") {
+          where.companyId = companyId;
+      }
+      let select = {}
+      // Fetch all the offers that the student has shown interest in
+      if(offerType === 'job'){
+        select.jobId = true
+      }else{
+        select.courseId = true
+      }  
+      const studentInterests = await prisma[offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'].findMany({
+          where: {
+              studentId:req.user.id,
+          },
+          select,
+      });
 
-        }
-
+      // Extract only the offer IDs
+      const interestedOfferIds = studentInterests.map(interest => offerType === 'job' ? interest.jobId : interest.courseId);
+      console.log("interestedOfferIds", interestedOfferIds)
+      // Exclude these offers in the main query
       const offers = await prisma[offerType].findMany({
-        skip: (page - 1) * limit,
-        take: parseInt(limit),
-        where,
-        include: {
-            area: {
-              select: {
-                name: true,
+          skip: (page - 1) * limit,
+          take: parseInt(limit),
+          where: {
+              ...where,
+              id: {
+                  notIn: interestedOfferIds,
               },
-            },
-            company: {
-              select: {
-                name: true,
+          },
+          include: {
+              area: {
+                  select: {
+                      name: true,
+                  },
               },
-            },
-        },
+              company: {
+                  select: {
+                      name: true,
+                  },
+              },
+          },
       });
 
       res.status(200).json(offers);
 
-    } catch (error) {
-        console.error('Error fetching offers:', error);
-        res.status(500).json({ error: 'An error occurred while fetching offers.' });
-    }
+  } catch (error) {
+      console.error('Error fetching offers:', error);
+      res.status(500).json({ error: 'An error occurred while fetching offers.' });
+  }
 }
+
 
 
 export const getOfferDetails = async (req, res) => {

@@ -21,8 +21,6 @@ model Student {
   link              String?
   interestedJobs    InterestedJobStudent[]    
   interestedCourses InterestedCourseStudent[] 
-  desinterestedJobs  DesinterestedJobStudent[]  
-  desinterestedCourses  DesinterestedCourseStudent[] 
 }
 
 model Company {
@@ -52,7 +50,6 @@ model Job {
   company          Company  @relation(fields: [companyId], references: [id])
   companyId        String
   interestedStudents  InterestedJobStudent[] 
-  desinterestedStudents  DesinterestedJobStudent[]    
 }
 
 model Course {
@@ -68,7 +65,6 @@ model Course {
   company          Company  @relation(fields: [companyId], references: [id])
   companyId        String
   interestedStudents  InterestedCourseStudent[] 
-  desinterestedStudents  DesinterestedCourseStudent[]
 }
 
 
@@ -83,27 +79,6 @@ model InterestedJobStudent {
 }
 
 model InterestedCourseStudent {
-  id       String  @id @default(uuid())
-  student  Student @relation(fields: [studentId], references: [id])
-  studentId String
-  course   Course  @relation(fields: [courseId], references: [id])
-  courseId String
-
-  @@unique([studentId, courseId])
-}
-
-
-model DesinterestedJobStudent {
-  id       String  @id @default(uuid())
-  student  Student @relation(fields: [studentId], references: [id])
-  studentId String
-  job      Job     @relation(fields: [jobId], references: [id])
-  jobId    String
-
-  @@unique([studentId, jobId])
-}
-
-model DesinterestedCourseStudent {
   id       String  @id @default(uuid())
   student  Student @relation(fields: [studentId], references: [id])
   studentId String
