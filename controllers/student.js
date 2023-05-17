@@ -123,7 +123,7 @@ export const getOfferDetails = async (req, res) => {
         const { offerType, offerId } = req.params;
         
         // Check if the student has already expressed interest
-      let obj;
+      /*let obj;
       if (offerType=='job'){
         obj ={
           studentId:req.user.id, jobId: offerId
@@ -132,11 +132,14 @@ export const getOfferDetails = async (req, res) => {
         obj ={
           studentId:req.user.id, courseId: offerId
         }
-      }
+      }*/
 
-        const existingInterest = await prisma[`${offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'}`].findFirst({
+        const existingInterest = await prisma[`${offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'}`].findUnique({
             where: {
-              ...obj
+              [offerType === 'job' ? 'studentId_jobId' : 'studentId_courseId']: {
+                [offerType === 'job' ? 'jobId' : 'courseId']: offerId,
+                studentId: req.user.id
+              }
             }
         });
 
@@ -171,6 +174,7 @@ export const postDisinterest = async (req, res, next) => {
   const { offerType, offerId } = req.params;
 
   try {
+
     if (offerType === 'job') {
       await prisma.interestedJobStudent.delete({
         where: {
