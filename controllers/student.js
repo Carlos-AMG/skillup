@@ -164,7 +164,6 @@ export const getOfferDetails = async (req, res) => {
 }
 
 
-<<<<<<< HEAD
 
 
 
@@ -203,10 +202,6 @@ export const postDisinterest = async (req, res, next) => {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while expressing disinterest' });
   }
-=======
-export const postDesinterest = async (req, res, next) => {
-
->>>>>>> de44b2ade5049d23ed336534840dcb9be88e327e
 }
   
 export const updateStudentProfile = async (req, res) => {
