@@ -14,7 +14,7 @@ companyRouter.post("/job",createJob);
 companyRouter.post("/course",createCourse)
 companyRouter.post("/update-job/:id",updateJob)
 companyRouter.post("/update-course/:id",updateCourse)
-companyRouter.delete("/delete-offer/:offerType/:offerId",deleteOffer)
+companyRouter.post("/delete-offer/:offerType/:offerId",deleteOffer)
 
 
 

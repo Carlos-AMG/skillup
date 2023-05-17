@@ -114,16 +114,12 @@ const generateOfferDetailsHTML = (offerDetails) => {
         <input type="submit" value="Up" class="px-5 bg-green-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md">
       </form>
     ` : "";
-/*
-    const expressDesinterestForm = state.userType === "students" ? `
-      <form class="py-2" id="express-desinterest-form" method="POST" action="api/express-desinterest/${state.currentFilterJobCourse}/${offerDetails.id}">
-        <input type="submit" value="Down" class="px-5 bg-red-500 text-black uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">
-      </form>
-    ` : "";*/
   
     const companyActions = state.userType === "companies" ? `
       <div class="py-2">
-      <button id="deleteButton" data-offer-id="${offerDetails.id}" data-offer-type="${state.currentFilterJobCourse}" class="px-5 bg-red-500 text-white uppercase hover:bg-red-700 font-bold py-3 cursor-pointer rounded-md">Delete </button>
+      <form class="py-2" id="delete-offer" method="POST" action="/companies/delete-offer/${state.currentFilterJobCourse}/${offerDetails.id}">
+        <input type="submit" value="Delete" class="px-5 bg-red-500 text-white uppercase hover:bg-green-700 font-bold py-3 cursor-pointer rounded-md">
+      </form>
         <a href="/companies/edit-offer/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-yellow-500 text-white uppercase hover:bg-yellow-700 font-bold py-3 cursor-pointer rounded-md">Update </a>
         <a href="/companies/skillers/${state.currentFilterJobCourse}/${offerDetails.id}" class="px-5 bg-blue-500 text-white uppercase hover:bg-blue-700 font-bold py-3 cursor-pointer rounded-md">Skillers</a>
       </div>
