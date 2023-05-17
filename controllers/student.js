@@ -334,7 +334,7 @@ export const fetchInterestedOffers = async (req, res) => {
           },
         },
         skip: skip,
-        take: limit,
+        take: parseInt(limit),
         include: {
           course: true,
           
