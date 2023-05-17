@@ -187,8 +187,8 @@ export const postDisinterest = async (req, res, next) => {
     } else if (offerType === 'course') {
       await prisma.interestedCourseStudent.delete({
         where: {
-          studentId_jobId: {
-            studentId: studentId,
+          studentId_courseId: {
+            studentId: req.user.id,
             courseId: offerId,
           },
           
