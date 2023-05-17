@@ -16,7 +16,7 @@ html(lang="es")
       block contenido
         .mb-5
           h1.text-center.text-4xl.font-bold Admin Dashboard
-        .container.pt-2
+        div(class="md:w-1/2   mx-auto").container.pt-2
           //- Section 1: Filters
           div#filter-section(class="mb-2 pt-2 w-full flex justify-center space-x-8")
             select#filter-company-student(class="py-2 px-2 rounded-lg border-4 border-green-500")
@@ -28,12 +28,18 @@ html(lang="es")
           div.bg-blue  
               ul#companies-list
                   each company in companies
-                      li(id=`company-${company.id}`)
+                      li(id=`company-${company.id}` class="border rounded  m-7 p-3")
                           div 
                               h1.px-2= company.name
                               h2.px-2 RFC:  #{company.rfc}
-                          button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button" class="verify" data-company-id=company.id) Verify
-                          button.bg-red-500.text-black.py-2.px-4.rounded-md(type="button" class="decline" data-company-id=company.id) Decline
+                          div(class="flex justify-evenly ")
+                            form#delete-offer.py-2(method='POST' action=`/admin/verify/${company.id}/` )
+                              input.px-5.bg-green-500.text-white.uppercase.font-bold.py-3.cursor-pointer.rounded-md(type='submit' value='Verify' class='hover:bg-green-700')
+                            //-button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button" class="verify mx-4" data-company-id=company.id) Verify
+                            form#delete-offer.py-2(method='POST' action=`/admin/decline/${company.id}/`)
+                              input.px-5.bg-red-500.text-white.uppercase.font-bold.py-3.cursor-pointer.rounded-md(type='submit' value='Decline' class='hover:bg-red-700')
+
+                         
               ul#students-list
                   each student in students
                       li

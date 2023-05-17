@@ -8,7 +8,11 @@ export const getAllAreas = async () => {
 };
 
 export const getAllCompanies = async () => {
-  const companies = await prisma.company.findMany()
+  const companies = await prisma.company.findMany({
+    where:{
+      verified:false
+    }
+  })
   return companies
 }
 

@@ -17,15 +17,21 @@ export const getDashboardPage = async (req,res) => {
 }
 
 export const verifyCompany = async (req, res) => {
-    const { companyId } = req.body;
+    const { companyId } = req.params;
     try {
       const updatedCompany = await prisma.company.update({
         where: { id: companyId },
         data: { verified: true },
       });
-      res.status(200).json({message: 'Company verified successfully', updatedCompany});
+      //req.flash('success','Company verified successfully')
+      res.redirect('/admin/adminDashboard')
+      //res.status(200).json({message: 'Company verified successfully', updatedCompany});
     } catch (error) {
       console.error(error);
       res.status(500).json({message: 'Error verifying company', erorr});
     }
+}
+
+export const declineCompany = async(req,res)=>{
+  const {companyId} = req.params
 }
