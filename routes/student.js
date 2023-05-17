@@ -1,6 +1,7 @@
 import express from 'express'
 import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails,postInterest
-    ,updateStudentProfile,getStudentCv,getStudentImage,getEditProfilePage, postDesinterest} from '../controllers/student.js'
+    ,updateStudentProfile,getStudentCv,getStudentImage,getEditProfilePage, postDisinterest
+    ,fetchInterestedOffers} from '../controllers/student.js'
 import isAuth from '../middlewares/isAuth.js'
 import { upload } from '../middlewares/upload.js';
 
@@ -18,7 +19,9 @@ studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
 studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
 studentRouter.post('/api/express-interest/:offerType/:offerId', postInterest);
-//studentRouter.post('/api/express-desinterest/:offerType/:offerId', postDesinterest);
+studentRouter.post('/api/express-disinterest/:offerType/:offerId', postDisinterest);
+
+studentRouter.get('/api/interest-offers/:currentFilterJobCourse', fetchInterestedOffers);
 
 studentRouter.put('/api/edit-profile', upload.fields([
   { name: 'profileImage', maxCount: 1 },

@@ -65,34 +65,16 @@ export const getEditProfilePage = async (req, res) => {
 
 
 export const getUpsPage = async (req,res) => {
-  try { let myUps=[]
-    const myUpsCourse= await prisma.InterestedCourseStudent.findMany({
-      where:{
-        studentId:req.user.id
-      }
-      ,include: {
-        course:true
-      }
-    })
-    const myUpsJobs= await prisma.InterestedJobStudent.findMany({
-      where:{
-        studentId:req.user.id
-      }
-      ,include: {
-        job:true
-      }
-    })
-    console.log(myUpsCourse)
-    console.log(myUpsJobs)
+  try {
+    const areas = await getAllAreas();
     res.render('students/my-ups',{
       pagina: 'My Ups',
-      myUpsCourse,
-      myUpsJobs
+      areas,
     })
-  } catch (error) {
-    console.log(error)
-    res.status(500).send(error)
-  }  
+  }  catch (error) {
+    console.error('Error while calling getAllAreas:', error);
+    res.send(500).send('internal server error');
+  }
   
 }
 
@@ -185,7 +167,42 @@ export const getOfferDetails = async (req, res) => {
 
 
 
-export const postDesinterest = async (req, res, next) => {}
+export const postDisinterest = async (req, res, next) => {
+  const { offerType, offerId } = req.params;
+
+  try {
+    if (offerType === 'job') {
+      await prisma.interestedJobStudent.delete({
+        where: {
+          studentId_jobId: {
+            studentId: req.user.id,
+            jobId: offerId,
+          },
+        },
+      });
+    } else if (offerType === 'course') {
+      await prisma.interestedCourseStudent.delete({
+        where: {
+          studentId_jobId: {
+            studentId: studentId,
+            courseId: offerId,
+          },
+          
+        },
+      });
+      
+    } else {
+
+      return res.status(400).json({ error: 'Invalid offer type' });
+    }
+    req.flash('success','Express disnterest correctly')
+      res.redirect('/students/dashboard');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while expressing disinterest' });
+  }
+}
   
 export const updateStudentProfile = async (req, res) => {
   const { fullName, education, studentId } = req.body;
@@ -278,3 +295,55 @@ export const getStudentCv = async (req, res, next) => {
     res.status(500).send('Error al obtener el cv del estudiante');
   }
 };
+
+
+export const fetchInterestedOffers = async (req, res) => {
+  const {  currentFilterJobCourse } = req.params;
+  const { page = 1, limit = 10, areaId } = req.query;
+
+  try {
+    const skip = (page - 1) * limit;
+
+    if (currentFilterJobCourse === 'job') {
+      const jobs = await prisma.interestedJobStudent.findMany({
+        where: {
+          studentId: 'a65a42e6-3463-43a9-850b-f33db4e1b425',
+          job: {
+            areaId: areaId,
+          },
+        },
+        skip: skip,
+        take: parseInt(limit),
+
+        include: {
+          job: true,
+        },
+      });
+      console.log(jobs)
+      res.json(jobs.map(record => record.job));
+    } else if (currentFilterJobCourse === 'course') {
+      const courses = await prisma.interestedCourseStudent.findMany({
+        where: {
+          studentId: 'a65a42e6-3463-43a9-850b-f33db4e1b425',
+          course: {
+            areaId: areaId,
+          },
+        },
+        skip: skip,
+        take: limit,
+        include: {
+          course: true,
+          
+      },
+      });
+      console.log(courses)
+      res.json(courses.map(record => record.course));
+    } else {
+      return res.status(400).json({ error: 'Invalid offer type' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching interested offers' });
+  }
+};
+

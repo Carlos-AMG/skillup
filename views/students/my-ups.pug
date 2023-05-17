@@ -1,13 +1,30 @@
 extends ../layout/indexInStudents
 
 block contenido
-    h1.text-center.text-4xl.font-normal My 
-        span.font-bold Ups
+    .mb-3.pb-3
+    h1.text-center.text-4xl.font-bold My
+        span.font-normal Ups
+    .container.pt-2
+    if success.length > 0
+            div.bg-green-500.text-white.font-bold.py-2.px-4.rounded(id="alert")
+            = success
 
-    h1 Jobs
-    each job in myUpsJobs
-        li= job.job.title
-    
-    h1 Courses 
-    each course in myUpsCourse
-        li= course.course.title
+    include ../partials/_error
+    //- Section 1: Filters
+    div#filter-section(class="mb-10 pt-2 w-full flex justify-center space-x-8")
+        select#filter-job-course(class="py-3 px-3 rounded-lg border-4 border-green-500")
+            option(value="job") Job
+            option(value="course") Course
+        select#filter-area(name="areaId" required class="py-3 px-3 rounded-lg border-4 border-green-500")
+            //- Dynamically populate the options with the available areas
+                
+            each area in areas
+                option(value=area.id)= area.name
+    div(class="grid gap-4 grid-cols-3 mt-5 pt-10")
+        #offers-section(style="overflow-y: scroll; height: 500px;" class="flex flex-col flex-nowrap justify-between justify-items-center items-stretch overflow-x-auto col-span-1 px-10")
+        .description-section(class="col-span-2")
+        h2(class="text-4xl font-bold text-center")
+
+
+
+    script(src="/js/student/my-ups.js")
