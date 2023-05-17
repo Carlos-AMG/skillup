@@ -118,7 +118,6 @@ export const getOfferDetails = async (req, res) => {
       res.status(500).json({ message: 'Error fetching offer details' });
     }
   };
-<<<<<<< HEAD
   export const postInterest = async (req, res) => {
     try {
         const { offerType, offerId } = req.params;
@@ -133,57 +132,6 @@ export const getOfferDetails = async (req, res) => {
         obj ={
           studentId:req.user.id, courseId: offerId
         }
-=======
-  
-export const postInterest = async (req, res, next) => {
-    const { offerType, offerId } = req.params;
-    let interestType, data;
-    let interested;
-  
-    if (offerType === "job") {
-      interestType = "InterestedJobStudent";
-      data = {
-        studentId: req.user.id,
-        jobId: offerId,
-      };
-      interested = await checkIfUserLikedJob(data.studentId, data.jobId)
-    } else if (offerType === "course") {
-      interestType = "InterestedCourseStudent";
-      data = {
-        studentId: req.user.id,
-        courseId: offerId,
-      };
-      interested = await checkIfUserLikedCourse(data.studentId, data.jobId)
-    } else {
-      res.status(400).json({ message: "Invalid offer type" });
-      return;
-    }
-
-    // check if it has already upped a post, if it has then exit else create relation
-    // const interestedJob = await checkIfUserLikedJob(data.studentId, data.jobId)
-    // const interestedCourse = await checkIfUserLikedCourse(data.studentId, data.jobId)
-
-    // console.log(interested)
-    // console.log(interestedCourse)
-    let interestType2 = interestType  === "InterestedJobStudent" ? "Job" : "Course"
-    if (interested) {
-      console.log("User has already liked that job/course")
-      req.flash("error", `${interestType2} has already been upped`)
-      res.redirect('/students/dashboard')
-    }else {
-      console.log("User has not liked the job/course")
-      try {
-        const interest = await prisma[interestType].create({
-          data,
-        })
-
-
-        req.flash('success', 'Course succesfully updated')
-        res.redirect('/students/dashboard')
-      } catch (err){
-        console.error("Error while registering interest: ", err)
-        res.status(500).json({message: "Error while registering interest"})
->>>>>>> de44b2ade5049d23ed336534840dcb9be88e327e
       }
 
         const existingInterest = await prisma[`${offerType === 'job' ? 'InterestedJobStudent' : 'InterestedCourseStudent'}`].findFirst({
