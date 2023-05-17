@@ -307,7 +307,7 @@ export const fetchInterestedOffers = async (req, res) => {
     if (currentFilterJobCourse === 'job') {
       const jobs = await prisma.interestedJobStudent.findMany({
         where: {
-          studentId: 'a65a42e6-3463-43a9-850b-f33db4e1b425',
+          studentId: req.user.id,
           job: {
             areaId: areaId,
           },
@@ -324,7 +324,7 @@ export const fetchInterestedOffers = async (req, res) => {
     } else if (currentFilterJobCourse === 'course') {
       const courses = await prisma.interestedCourseStudent.findMany({
         where: {
-          studentId: 'a65a42e6-3463-43a9-850b-f33db4e1b425',
+          studentId:req.user.id,
           course: {
             areaId: areaId,
           },
