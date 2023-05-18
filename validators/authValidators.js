@@ -1,4 +1,4 @@
-import { check } from "express-validator";
+import { check,validationResult } from "express-validator";
 
 export const signUpStudent = [
   check("fullName")
@@ -43,4 +43,40 @@ export const signUpCompany = [
       .trim()
       .notEmpty()
       .withMessage("Please enter the company's RFC."),
+  ];
+
+  export const jobValidator = [
+    check('title').notEmpty().withMessage('Title is required.'),
+    check('description').notEmpty().withMessage('Description is required.'),
+    check('skills').notEmpty().withMessage('Skills are required.'),
+    check('salary').notEmpty().withMessage('Salary is required.'),
+    check('hoursPerWeek').notEmpty().withMessage('Hours Per Week are required.'),
+
+  
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array());
+        return res.redirect('/companies/offers');
+      }
+      next();
+    },
+  ];
+
+  export const courseValidator = [
+    check('title').notEmpty().withMessage('Title is required.'),
+    check('startDate').notEmpty().withMessage('A Start Day is required.'),
+    check('endDate').notEmpty().withMessage('An End Day is required.'),
+    check('description').notEmpty().withMessage('Description is required.'),
+    check('prerequisites').notEmpty().withMessage('Prerequisites are required.'),
+
+  
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array());
+        return res.redirect('/companies/offers');
+      }
+      next();
+    },
   ];

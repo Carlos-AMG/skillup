@@ -15,7 +15,8 @@ html(lang="es")
       br
       block contenido
         .mb-5
-          h1.text-center.text-4xl.font-bold Admin Dashboard
+          h1.text-center.text-4xl.font-bold.mb-5 Admin Dashboard
+          include ../partials/_success
         div(class="md:w-1/2   mx-auto").container.pt-2
           //- Section 1: Filters
           div#filter-section(class="mb-2 pt-2 w-full flex justify-center space-x-8")
@@ -43,5 +44,4 @@ html(lang="es")
               ul#students-list
                   each student in students
                       li
-                          span.px-2=student.fullName
-
+                          span.px-2=student.fullName 

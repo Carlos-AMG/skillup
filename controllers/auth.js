@@ -55,6 +55,7 @@ export const postSignIn = (req, res, next) => {
 export const registerUser = async (req, res) => {
     const {fullName, email, password} = req.body
     const errors = validationResult(req);
+
     const userType = req.params.userType;
     let existingAccount;
 
