@@ -1,5 +1,5 @@
 import express from 'express'
-import{getDashboardPage, verifyCompany} from '../controllers/admin.js'
+import{getDashboardPage, verifyCompany,declineCompany} from '../controllers/admin.js'
 
 
 const adminRouter = express.Router();
@@ -12,5 +12,6 @@ adminRouter.post("/", verifyCompany)
 
 //API
 adminRouter.post("/verify/:companyId",verifyCompany)
+adminRouter.post("/decline/:companyId",declineCompany)
 
 export default adminRouter;

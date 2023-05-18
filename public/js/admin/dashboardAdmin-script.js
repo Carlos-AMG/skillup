@@ -18,7 +18,7 @@ window.onload = () => {
             studentsList.style.display = "block"
         }
     });
-
+/*
     companiesList.addEventListener("click", (event) => {
         // we'll use event capturing so that all buttons inside companiesList have click event listener 
         if (event.target.classList.contains("verify")){
@@ -31,7 +31,7 @@ window.onload = () => {
                 event.target.parentElement.remove()
             }}).catch(err => console.log('This is the error', err))
         }
-    })
+    })*/
 }
 
 
