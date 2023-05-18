@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import bcrypt from "bcrypt";
 
 async function createOrUpdateArea(areaName) {
   const area = await prisma.area.findFirst({ where: { name: areaName } });
@@ -12,6 +13,7 @@ async function createOrUpdateArea(areaName) {
 }
 
 async function createCompany(name, email, rfc, address, description,password) {
+  const hashedPassword = await bcrypt.hash(password, 10);
   const company = await prisma.company.create({
     data: {
       name: name,
@@ -19,7 +21,7 @@ async function createCompany(name, email, rfc, address, description,password) {
       rfc: rfc,
       address: address,
       description: description,
-      password
+      password:hashedPassword
     },
   });
 
