@@ -29,19 +29,24 @@ html(lang="es")
           div.bg-blue  
               ul#companies-list
                   each company in companies
-                      li(id=`company-${company.id}` class="border rounded  m-7 p-3")
-                          div 
-                              h1.px-2= company.name
-                              h2.px-2 RFC:  #{company.rfc}
-                          div(class="flex justify-evenly ")
-                            form#delete-offer.py-2(method='POST' action=`/admin/verify/${company.id}/` )
-                              input.px-5.bg-green-500.text-white.uppercase.font-bold.py-3.cursor-pointer.rounded-md(type='submit' value='Verify' class='hover:bg-green-700')
-                            //-button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button" class="verify mx-4" data-company-id=company.id) Verify
-                            form#delete-offer.py-2(method='POST' action=`/admin/decline/${company.id}/`)
-                              input.px-5.bg-red-500.text-white.uppercase.font-bold.py-3.cursor-pointer.rounded-md(type='submit' value='Decline' class='hover:bg-red-700')
-
-                         
+                      li(id=`company-${company.id}`)
+                          div.rect(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400") 
+                              p.text-2xl.font-bold Name: 
+                                span.font-normal #{company.name}
+                              p.text-2xl.font-bold RFC: 
+                                span.font-normal #{company.rfc}
+                              div(class="mx-5")
+                                button.bg-green-500.text-white.py-2.px-4.rounded-md(type="button" class="verify" data-company-id=company.id) Verify
+                                button.bg-red-500.text-black.py-2.px-4.rounded-md(type="button" class="decline" data-company-id=company.id) Decline
               ul#students-list
                   each student in students
                       li
-                          span.px-2=student.fullName 
+                        div.rect(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 ")
+                          p.text-2xl.font-bold Name:
+                            span.font-nomral #{student.fullName}
+                          p.text-2xl.font-bold Email: 
+                            span.font-normal #{student.email}
+                        
+
+                          
+
