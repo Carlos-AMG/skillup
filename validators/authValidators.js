@@ -57,6 +57,7 @@ export const signUpCompany = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array());
+        req.flash('data',req.body)
         return res.redirect('/companies/offers');
       }
       next();
