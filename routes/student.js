@@ -8,7 +8,7 @@ import { upload } from '../middlewares/upload.js';
 const studentRouter = express.Router();
 
 //Render
-
+ 
 studentRouter.get("/dashboard",isAuth,getDashboardPage);
 studentRouter.get("/profile",isAuth, getProfilePage);
 studentRouter.get("/my-ups", isAuth,getUpsPage);

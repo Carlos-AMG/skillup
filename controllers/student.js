@@ -212,7 +212,7 @@ export const updateStudentProfile = async (req, res) => {
   const { fullName, education, studentId } = req.body;
   const profileImage = req.files && req.files.profileImage ? req.files.profileImage[0] : undefined;
   const cv = req.files && req.files.cv ? req.files.cv[0] : undefined;
-
+  
   try {
     let updateData = {
       fullName,
@@ -225,21 +225,29 @@ export const updateStudentProfile = async (req, res) => {
         where: { id: studentId },
         select: { profileImage: true },
       });
-    
+    const dirPath=path.join(__dirname, '..', 'uploads',`profile_images`)
+    if(!fs.existsSync(dirPath)){
+      fs.mkdirSync(dirPath,{recursive:true})
+    }
       // Elimina la imagen de perfil anterior si existe
-      if (currentStudent.profileImage) {
-        const oldImagePath = path.join(__dirname, '..', currentStudent.profileImage);
-        if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
-        }
+    if (currentStudent.profileImage) {
+      const oldImagePath = path.join(__dirname, '..', currentStudent.profileImage);
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
       }
+    }
     
       updateData.profileImage = `uploads/profile_images/${profileImage.filename}`;
     }
 
     if (cv) {
       updateData.cv = `uploads/cvs/${cv.filename}`;
-    }
+    }else{
+      const dirPath=path.join(__dirname, '..', 'uploads',`cvs`)
+        if(!fs.existsSync(dirPath)){
+          fs.mkdirSync(dirPath,{recursive:true})
+      }
+    } 
 
     await prisma.student.update({
       where: {
