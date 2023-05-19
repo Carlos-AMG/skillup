@@ -13,7 +13,7 @@ companyRouter.get("/edit-offer/:offerType/:offerId",isAuth, getEditFormPage)
 //Api
 companyRouter.post("/job",jobValidator,createJob);
 companyRouter.post("/course",courseValidator,createCourse)
-companyRouter.post("/update-job/:id",jobValidator,updateJob)
+companyRouter.post("/update-job/:id",jobValidator,updateJob) 
 companyRouter.post("/update-course/:id",courseValidator,updateCourse)
 companyRouter.post("/delete-offer/:offerType/:offerId",deleteOffer)
 
