@@ -10,7 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "css": "npx tailwindcss -i public/css/tailwind.css -o public/css/app.css --watch"
+    "css": "npx tailwindcss -i public/css/tailwind.css -o public/css/app.css --watch",
+    "db:import" :"node ./prisma/seed.js -i",
+    "db:delete" :"node ./prisma/seed.js -d"
   },
   "keywords": [],
   "author": "",

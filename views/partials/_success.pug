@@ -1,0 +1,11 @@
+if msg!=undefined
+      div.bg-green-500.text-white.font-bold.py-2.px-4.rounded.mt-6(id="alert")
+          = msg.success
+script. 
+    setTimeout(function() {
+        var elem = document.getElementById('alert')
+
+        if(elem)
+            return elem.parentNode.removeChild(elem)
+            
+    }, 3000); 

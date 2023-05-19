@@ -19,19 +19,47 @@ export const getDashboardPage = async (req,res) => {
 export const verifyCompany = async (req, res) => {
     const { companyId } = req.params;
     try {
-      const updatedCompany = await prisma.company.update({
+      await prisma.company.update({
         where: { id: companyId },
         data: { verified: true },
       });
-      //req.flash('success','Company verified successfully')
-      res.redirect('/admin/adminDashboard')
-      //res.status(200).json({message: 'Company verified successfully', updatedCompany});
+      const companies = await getAllCompanies()
+      const students = await getAllStudents()
+  
+      res.render('admin/adminDashboard',{
+        msg:{
+          success:"Company verified successfully",
+        },        
+        students,companies
+        
+      })
     } catch (error) {
       console.error(error);
-      res.status(500).json({message: 'Error verifying company', erorr});
+      res.status(500).json({message: 'Error verifying company', error});
     }
 }
 
 export const declineCompany = async(req,res)=>{
   const {companyId} = req.params
+
+  try{
+    await prisma.company.delete({
+      where:{
+        id:companyId
+      }
+    })        
+    const companies = await getAllCompanies()
+    const students = await getAllStudents()
+
+    res.render('admin/adminDashboard',{
+      msg:{
+        success:"Company declined successfully",
+      },        
+      students,companies
+      
+    })
+  }catch(err){
+    console.log("Error declined successfully",err)
+  }
+
 }
