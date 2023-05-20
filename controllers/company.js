@@ -266,7 +266,9 @@ export const  sendContactEmail =async (req, res) => {
     // Send the email
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
-    res.status(200).send('Email sent successfully');
+    
+    req.flash('success','Email sent successfully')
+    res.redirect('/companies/dashboard');
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).json({ error: 'An error occurred while sending the email.' });
