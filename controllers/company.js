@@ -57,8 +57,8 @@ export const getSkillersPage= async(req,res)=>{
         select:{
             title:true,
         }
-    })
-    
+    })  
+    console.log('skillers ', skillers)
     res.render('companies/skillers',{skillers,title})
    }catch(err){
     console.error(err)
