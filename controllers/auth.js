@@ -54,10 +54,12 @@ export const postSignIn = (req, res, next) => {
   //SignUp handlers
 export const registerUser = async (req, res) => {
     const {fullName, email, password} = req.body
+    const {rfc} = req.body
     const errors = validationResult(req);
 
     const userType = req.params.userType;
     let existingAccount;
+    let repeatedRFC;
 
     // check if email has already been used in either students or companies
     
@@ -66,7 +68,12 @@ export const registerUser = async (req, res) => {
         where: {
           email
         }
-      })
+      });
+      repeatedRFC = await prisma.company.findFirst({
+        where: {
+          rfc
+        }
+      });
     }else if (userType === "students"){
       existingAccount = await prisma.student.findFirst({
         where: {
@@ -74,7 +81,7 @@ export const registerUser = async (req, res) => {
         }
       })
     }
-
+    console.log(existingAccount, repeatedRFC)
     let bool = false
     if (existingAccount){
       errors.errors.push({
@@ -82,6 +89,16 @@ export const registerUser = async (req, res) => {
         value: '',
         msg: `Couldnt create user, ${email} has already been used`,
         path: 'email',
+        location: 'body',
+      })
+      bool = true
+    }
+    if (repeatedRFC){
+      errors.errors.push({
+        type: 'field',
+        value: '',
+        msg: `Couldnt create user, ${rfc} rfc has already been used`,
+        path: 'rfc',
         location: 'body',
       })
       bool = true
