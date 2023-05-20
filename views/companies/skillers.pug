@@ -19,3 +19,7 @@ block contenido
                                         a(href=`/students/api/cv/${skiller.student.id}`, target="_blank" class="font-normal px-5  text-white") View CV             
                             else 
                                 td(class="font-normal text-normal") Not cv provided
+                            td( ) 
+                                form(action=`/companies/send-email/${skiller.student.fullName}/${skiller.student.email}` method="post")
+                                    input(type="hidden" name="offerName" value=title)
+                                    input.bg-blue-500.text-white.py-2.px-4.rounded-md.font-bold(type="submit" class="verify"  value="Contact" class="hover:bg-blue-700") 

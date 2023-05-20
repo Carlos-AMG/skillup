@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { getAllAreas ,parseDate} from "../helpers/utils.js";
 const prisma = new PrismaClient();
+import nodemailer from "nodemailer"
 
 
 //Render
@@ -51,10 +52,16 @@ export const getSkillersPage= async(req,res)=>{
             }
         })
     }
-
-    res.render('companies/skillers',{skillers})
+    let {title} = await prisma[offerType].findUnique({
+        where:{id:offerId},
+        select:{
+            title:true,
+        }
+    })
+    
+    res.render('companies/skillers',{skillers,title})
    }catch(err){
-    console.log(err)
+    console.error(err)
    }
 
 }
@@ -218,3 +225,51 @@ export const updateJob = async (req, res) => {
         res.status(500).send("Error in deleting the offer");
     }
 }
+
+
+
+export const  sendContactEmail =async (req, res) => {
+  const { studentName, studentEmail } = req.params;
+  let {offerName} = req.body
+    let company;
+  try{
+     company = await prisma.company.findUnique({
+        where:{
+            id:req.user.id
+        }
+    })
+  }catch(err){
+    console.log(err)
+  }
+  let transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+
+  let mailOptions = {
+    from:company.email,
+    to: studentEmail ,
+    subject: 'Contact email',
+    html:`
+            <p>Hi ${studentName}! </p>
+            <p>Hi ${studentName}, we saw your resume and we want to schedule an interview for the ${offerName}
+            </p>`,
+
+  };
+  //--------------------------------
+
+  try {
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    res.status(200).send('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'An error occurred while sending the email.' });
+  }
+};
+

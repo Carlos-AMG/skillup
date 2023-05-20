@@ -1,5 +1,5 @@
 import express from 'express'
-import{getOffersPage,getProfilePage,createJob,createCourse, getSkillersPage, getDashboardPage,getEditFormPage,updateJob,updateCourse,deleteOffer} from '../controllers/company.js'
+import{getOffersPage,getProfilePage,createJob,createCourse, getSkillersPage, getDashboardPage,getEditFormPage,updateJob,updateCourse,deleteOffer,sendContactEmail} from '../controllers/company.js'
 import { jobValidator,courseValidator } from '../validators/authValidators.js';
 import isAuth from '../middlewares/isAuth.js'
 const companyRouter = express.Router();
@@ -16,6 +16,8 @@ companyRouter.post("/course",courseValidator,createCourse)
 companyRouter.post("/update-job/:id",jobValidator,updateJob) 
 companyRouter.post("/update-course/:id",courseValidator,updateCourse)
 companyRouter.post("/delete-offer/:offerType/:offerId",deleteOffer)
+companyRouter.post("/send-email/:studentName/:studentEmail",sendContactEmail)
+
 
 
 
