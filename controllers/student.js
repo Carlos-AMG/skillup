@@ -209,7 +209,7 @@ export const postDisinterest = async (req, res, next) => {
 }
   
 export const updateStudentProfile = async (req, res) => {
-  const { fullName, education, studentId } = req.body;
+  const { fullName, education, studentId,link } = req.body;
   const profileImage = req.files && req.files.profileImage ? req.files.profileImage[0] : undefined;
   const cv = req.files && req.files.cv ? req.files.cv[0] : undefined;
   
@@ -217,6 +217,7 @@ export const updateStudentProfile = async (req, res) => {
     let updateData = {
       fullName,
       education,
+      link
     };
 
     if (profileImage) {

@@ -81,3 +81,12 @@ export const signUpCompany = [
       next();
     },
   ];
+
+export const updateStudentProfileValidator=[
+  check("fullName")
+    .isLength({ min: 3, max: 20 }).withMessage('Name must be between 3 and 20 characters long')
+    .withMessage('Name is required'),
+  check("education")
+    .notEmpty().withMessage("Education is required"),
+
+]

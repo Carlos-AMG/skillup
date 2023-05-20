@@ -16,11 +16,20 @@ block contenido
                 img(src=`api/profile-image/${student.id}` , alt="Profile picture", style="width: 200px; height: 200px;border-radius: 50%")
               else
                 p.text-2xl.font-bold Picture: 
-                  span.font-normal No profile picture has been uploaded.
+                  if !student.profileImage
+                    span.font-normal No profile picture has been uploaded.
+                  else 
+                    span.font-normal Pictur already uploaded
 
             div.mt-5
               p.text-2xl.font-bold Education: 
                 span.font-normal #{student.education}
+
+            div.mt-5
+              if student.link
+                p.text-2xl.font-bold Link: 
+                  a(href= `${student.link}`)
+                    span.font-normal #{student.link}
 
             div.mt-5
               p.text-2xl.font-bold  Curriculum Vitae (CV): 

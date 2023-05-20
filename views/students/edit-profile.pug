@@ -1,28 +1,38 @@
 extends ../layout/indexInStudents
 
 block contenido
-    h1 Edit Student Profile
+    h1.text-center.text-4xl.font-bold.mb-3 Edit Student 
+        span.text-green-500 Profile
+
 
     form#editProfileForm(enctype="multipart/form-data")
         
         input#studentId(name="studentId", type="hidden", value=student.id)
 
-        label(for="fullName") Full Name:
-        input(type="text", id="fullName", name="fullName", value=student.fullName)
+        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="fullName" class="font-bold font-2xl") Full Name:
+        input.w-half.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(required type="text", id="fullName", name="fullName", value=student.fullName)
         br
 
-        label(for="education") Education:
-        input(type="text", id="education", name="education", value=student.education)
+        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold.mt-3(for="education") Education:
+        input.w-half.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(required type="text", id="education", name="education", value=student.education)
+        br
+        
+        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold.mt-3(for="education") Link:
+        input.w-half.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(type="text", id="link", name="link", value=student.link)
         br
 
-        label(for="profileImage") Profile Picture:
-        input(type="file", id="profileImage", name="profileImage")
-        br
-
-        label(for="cv") Curriculum Vitae (CV):
-        input(type="file", id="cv", name="cv")
-        br
+        if !student.profileImage
+            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold.mt-3(for="profileImage") Profile Picture:
+            input.w-half.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(type="file", id="profileImage", name="profileImage")
             
-        input(type="submit", value="Save Changes")
+        else 
+            p.block.text-sm.uppercase.text-gray-500.mb-2.font-bold.mt-3 Picture already uploaded
+        
+
+        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold.mt-3(for="cv") Curriculum Vitae (CV):
+        input.w-half.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400.mb-5(type="file", id="cv", name="cv")
+            
+        br
+        input(type="submit", value="Save Changes" class="w-half bg-blue-500 text-white uppercase hover:bg-blue-700 font-bold py-3 cursor-pointer rounded-md px-3")
 
     script(src="/js/student/edit-profile.js")
