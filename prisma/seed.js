@@ -26,7 +26,7 @@ async function createCompany(name, email, rfc, address, description,password) {
   if (existingEmail || existingRFC) {
     console.log('Company with the same email or RFC already exists.');
   } else {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const company = await prisma.company.create({
       data: {
         name: name,
@@ -50,7 +50,7 @@ async function createStudent(email, password, name, education) {
   if (existingStudent) {
     console.log('Student with the same email already exists.');
   } else {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const student = await prisma.student.create({
       data: {
         email: email,
@@ -65,10 +65,10 @@ async function createStudent(email, password, name, education) {
 
 async function createJob(title, description, jobType, skills, modality, salary, hoursPerWeek, areaId, companyId) {
   const existingAreaId = await prisma.area.findUnique({
-    where: { area: areaId }
+    where: { id: areaId }
   });
   const existingCompanyId = await prisma.company.findUnique({
-    where: { company: companyId}
+    where: { id: companyId}
   });
   if (existingAreaId || existingCompanyId) {
     const job = await prisma.job.create({
@@ -92,10 +92,10 @@ async function createJob(title, description, jobType, skills, modality, salary, 
 
 async function createCourse(title, startDate, endDate, description, prerequisites, modality, areaId, companyId) {
   const existingAreaId = await prisma.area.findUnique({
-    where: { area: areaId }
+    where: { id: areaId }
   });
   const existingCompanyId = await prisma.company.findUnique({
-    where: { company: companyId}
+    where: { id: companyId}
   });
   if (existingAreaId || existingCompanyId) {
     console.log(existingAreaId,existingCompanyId)

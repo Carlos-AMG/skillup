@@ -43,6 +43,19 @@ export const declineCompany = async(req,res)=>{
   const {companyId} = req.params
 
   try{
+    await prisma.job.deleteMany({
+      where:{
+        companyId
+      }
+    });
+
+    await prisma.course.deleteMany({
+      where:{
+        companyId
+      }
+    })
+
+
     await prisma.company.delete({
       where:{
         id:companyId
