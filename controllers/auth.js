@@ -54,9 +54,10 @@ export const postSignIn = (req, res, next) => {
   //SignUp handlers
 export const registerUser = async (req, res) => {
     const {fullName, email, password} = req.body
+    const userType = req.params.userType;
     const errors = validationResult(req);
 
-    const userType = req.params.userType;
+   
     let existingAccount;
 
     // check if email has already been used in either students or companies
@@ -86,10 +87,11 @@ export const registerUser = async (req, res) => {
       })
       bool = true
     }
-
+    console.log(req.body)
     if (!errors.isEmpty()) {
       // console.log(errors.array())
       return res.status(422).render(`${userType}/signup`, {
+        formData:req.body,
         type: userType,
         pagina: "SignUp",
         errors: errors.array(),

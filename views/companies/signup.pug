@@ -5,29 +5,29 @@ block contenido
         span.font-extrabold #{type}
     .py-10 
         h2.text-center.text-4xl.font-extrabold.text-green-500= pagina
-
+        include ../partials/_errors 
         .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
                 form(action="/companies/signup" method="POST" id="signup-form").space-y-5
-                    include ../partials/_errors 
+                    
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="name") Company Name
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your company name" type="text" name="name" required) 
+                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your company name" type="text" name="name" value=formData ? formData.name : '') 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") SignUp Email
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your company email" type="email" name="email" required) 
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your company email" type="email" name="email" value=formData? formData.email : '') 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="rfc") RFC
-                        input#rfc.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Wtite your RFC" type="text" name="rfc") 
+                        input#rfc.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Wtite your RFC" type="text" name="rfc" value=formData? formData.rfc : '') 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="address") Your Address
-                        input#address.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( type="text" name="address" placeholder="Write you company address")
+                        input#address.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( type="text" name="address" placeholder="Write you company address" value=formData? formData.address : '')
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="description") Description 
-                        input#description.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Description of the company" type="text" name="description")              
+                        input#description.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Description of the company" type="text" name="description" value=formData? formData.description : '')              
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Your Password
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password")
+                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your Password" type="password" name="password" )
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="repetir-password") Repeat Password
                         input#repeat-password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Repeat your Password" type="password") 

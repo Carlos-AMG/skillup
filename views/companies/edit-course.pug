@@ -13,7 +13,7 @@ block contenido
                 form(action=`/companies/update-course/${offer.id}` method="POST")
                     div.pt-5div.pt-5
                         label(for="title" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Tittle:
-                        input(type="text" name="title" id="title" placeholder="Tittle" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer.title)
+                        input(type="text" name="title" id="title" placeholder="Tittle" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer ? offer.title : formData.title )
                     div.pt-5  
                         label(for="startDate" class="block text-sm uppercase text-gray-500 mb-2 font-bold") Start Date:
                         input(type="datetime-local" name="startDate" id="startDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" value=offer.startDate)

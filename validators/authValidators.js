@@ -16,6 +16,18 @@ export const signUpStudent = [
     .withMessage('Password must be at least 6 characters long')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()\-_=+{}[\]|;:'",.<>/?\\]{6,}$/)
     .withMessage('Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character'),
+
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        console.log("validators")
+        req.flash('errors', errors.array());
+        req.flash('formData', req.body);
+        console.log(req.body)
+        return res.redirect('/students/signup');
+      }
+      next();
+    },
 ];
 
 
@@ -43,6 +55,17 @@ export const signUpCompany = [
       .trim()
       .notEmpty()
       .withMessage("Please enter the company's RFC."),
+
+      (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          req.flash('errors', errors.array());
+          req.flash('formData', req.body);
+          console.log(req.body)
+          return res.redirect('/companies/signup');
+        }
+        next();
+      },
   ];
 
   export const jobValidator = [
@@ -57,6 +80,7 @@ export const signUpCompany = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array());
+        req.flash('formData', req.body);
         return res.redirect('/companies/offers');
       }
       next();
@@ -75,6 +99,7 @@ export const signUpCompany = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array());
+        req.flash('formData', req.body);
         return res.redirect('/companies/offers');
       }
       next();

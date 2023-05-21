@@ -12,19 +12,19 @@ block contenido
                     include ../partials/_errors
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="fullname") Your Name
-                        input#fullName.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your name" type="text" name="fullName" ) 
+                        input#fullName.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your name" type="text" name="fullName" value=formData?formData.fullName : '') 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") SignUp Email
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your email" type="email" name="email" ) 
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Write your email" type="email" name="email" value=formData?formData.email : '' ) 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="education") Your Education
-                        input#education.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Wtite your University" type="text" name="education" ) 
+                        input#education.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Wtite your University" type="text" name="education" value=formData?formData.education : '') 
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="cv") Your Resume
-                        input#cv.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( type="file" name="cv")
+                        input#cv.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( type="file" name="cv" value=formData?formData.cv : '')
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="link") Link (Optional) 
-                        input#link.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ex. GitHub, LinkedIn" type="text" name="link")              
+                        input#link.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ex. GitHub, LinkedIn" type="text" name="link" value=formData?formData.link : '')              
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="profileImage") Profile Image
                         input#profileImage.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( type="file" name="profileImage")
