@@ -12,7 +12,7 @@ async function createOrUpdateArea(areaName) {
   return area;
 }
 
-async function createCompany(name, email, rfc, address, description,password) {
+async function createCompany(name, email, rfc, address, description,password,verified) {
   const existingEmail = await prisma.company.findUnique({
     where: {
       email: email
@@ -34,7 +34,8 @@ async function createCompany(name, email, rfc, address, description,password) {
         rfc: rfc,
         address: address,
         description: description,
-        password:hashedPassword
+        password:hashedPassword,
+        verified
       },
     });
     return company;
@@ -167,7 +168,8 @@ const importarDatos=async()=>{
     'ABCDEFGHIJSA',
     'LOS ANGELES',
     'Empresa enfocada en la navegacion',
-    'Es1234567'
+    'Es1234567',
+    true
   );
   const company2 = await createCompany(
     'HP',
@@ -176,6 +178,7 @@ const importarDatos=async()=>{
     'zapa gdl',
     'We make chips',
     'Es123456' 
+    ,true
   );
 
   if (company1 === undefined || company2 ===undefined) {
