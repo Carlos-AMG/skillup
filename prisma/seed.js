@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { isNullOrUndefined } from "url/util";
 const prisma = new PrismaClient();
 import bcrypt from "bcrypt";
 
@@ -27,6 +26,7 @@ async function createCompany(name, email, rfc, address, description,password) {
   if (existingEmail || existingRFC) {
     console.log('Company with the same email or RFC already exists.');
   } else {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const company = await prisma.company.create({
       data: {
         name: name,
@@ -34,7 +34,7 @@ async function createCompany(name, email, rfc, address, description,password) {
         rfc: rfc,
         address: address,
         description: description,
-        password: password
+        password:hashedPassword
       },
     });
     return company;
@@ -50,10 +50,11 @@ async function createStudent(email, password, name, education) {
   if (existingStudent) {
     console.log('Student with the same email already exists.');
   } else {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const student = await prisma.student.create({
       data: {
         email: email,
-        password: password,
+        password: hashedPassword,
         fullName: name,
         education: education
       },
