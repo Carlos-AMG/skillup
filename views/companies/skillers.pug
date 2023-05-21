@@ -1,14 +1,38 @@
 extends ../layout/indexInCompanies
 block contenido
     h1.text-center.text-4xl.font-bold Skillers
-
-    if skillers 
-        each skiller in skillers 
-            div
-                //-h2= skiller.job ? skiller.job.title : skiller.course.title
-                h3= skiller.student.fullName
-                p= skiller.student.email
-                if skiller.student.cv
-                    a(href=`/students/api/cv/${skiller.student.id}` , target="_blank") View CV
-                else 
-                    p not cv provided
+        
+        if skillers.length!=0 
+            div(class="flex justify-center mt-3")
+                table
+                    tr(class="text-3xl font-bold text-blue-500 mx-5 mb-4")
+                        th Nombre
+                        th Correo
+                        th Link
+                        th CV
+                        th Send Mail
+                    
+                        each skiller in skillers 
+                            
+                            tr(class="text-xl ")
+                                td(class="font-bold  px-5 py-5")= skiller.student.fullName
+                                td(class="font-normal px-5 py-5")= skiller.student.email
+                                if skiller.student.link
+                                    td(class="font-normal  px-5 py-5 text-center")
+                                        a(href=`${skiller.student.link}`) Link
+                                else 
+                                    td(class="font-normal text-normal mx-5") Not provided
+                                if skiller.student.cv
+                                    td.px-5
+                                        button.bg-red-500.rounded-lg
+                                            a(href=`/students/api/cv/${skiller.student.id}`, target="_blank" class="font-normal px-5  text-white") View CV             
+                                else 
+                                    td(class="font-normal text-normal text-center") Not provided
+                                td( ) 
+                                    form(action=`/companies/send-email/${skiller.student.fullName}/${skiller.student.email}` method="post")
+                                        input(type="hidden" name="offerName" value=title)
+                                        input.bg-green-500.text-white.py-2.px-4.rounded-md.font-bold(type="submit" class="verify"  value="Contact" class="hover:bg-green-700") 
+        else 
+            br
+            button.bg-red-500.rounded-lg.mt-5.py-2.px-3
+                h2(class="text-white font-bold text-2xl") There are no skillers for this position

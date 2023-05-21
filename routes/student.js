@@ -4,11 +4,12 @@ import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails,
     ,fetchInterestedOffers} from '../controllers/student.js'
 import isAuth from '../middlewares/isAuth.js'
 import { upload } from '../middlewares/upload.js';
+import { updateStudentProfileValidator } from '../validators/authValidators.js';
 
 const studentRouter = express.Router();
 
 //Render
-
+ 
 studentRouter.get("/dashboard",isAuth,getDashboardPage);
 studentRouter.get("/profile",isAuth, getProfilePage);
 studentRouter.get("/my-ups", isAuth,getUpsPage);
@@ -23,7 +24,7 @@ studentRouter.post('/api/express-disinterest/:offerType/:offerId', postDisintere
 
 studentRouter.get('/api/interest-offers/:currentFilterJobCourse', fetchInterestedOffers);
 
-studentRouter.put('/api/edit-profile', upload.fields([
+studentRouter.put('/api/edit-profile', updateStudentProfileValidator,upload.fields([
   { name: 'profileImage', maxCount: 1 },
   { name: 'cv', maxCount: 1 },
 ]), updateStudentProfile);

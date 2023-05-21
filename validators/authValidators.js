@@ -81,6 +81,7 @@ export const signUpCompany = [
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array());
         req.flash('formData', req.body);
+        console.log(req.body)
         return res.redirect('/companies/offers');
       }
       next();
@@ -99,9 +100,63 @@ export const signUpCompany = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array());
-        req.flash('formData', req.body);
+        //req.flash('formData', req.body);
+        console.log(req.body)
         return res.redirect('/companies/offers');
       }
       next();
     },
   ];
+
+
+  
+  export const jobEditValidator = [
+    check('title').notEmpty().withMessage('Title is required.'),
+    check('description').notEmpty().withMessage('Description is required.'),
+    check('skills').notEmpty().withMessage('Skills are required.'),
+    check('salary').notEmpty().withMessage('Salary is required.'),
+    check('hoursPerWeek').notEmpty().withMessage('Hours Per Week are required.'),
+
+  
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array());
+        req.flash('formData', {...req.body,id:req.params.id});
+
+        return res.redirect(`/companies/edit-offer/job/${req.params.id}`);
+      }
+      next();
+    },
+  ];
+
+  export const courseEditValidator = [
+    check('title').notEmpty().withMessage('Title is required.'),
+    check('startDate').notEmpty().withMessage('A Start Day is required.'),
+    check('endDate').notEmpty().withMessage('An End Day is required.'),
+    check('description').notEmpty().withMessage('Description is required.'),
+    check('prerequisites').notEmpty().withMessage('Prerequisites are required.'),
+
+  
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array());
+        //req.flash('formData', req.body);
+
+        req.flash('formData', {...req.body,id:req.params.id});
+
+        return res.redirect(`/companies/edit-offer/course/${req.params.id}`);
+      }
+      next();
+    },
+  ];
+
+export const updateStudentProfileValidator=[
+  check("fullName")
+    .isLength({ min: 3, max: 20 }).withMessage('Name must be between 3 and 20 characters long')
+    .withMessage('Name is required'),
+  check("education")
+    .notEmpty().withMessage("Education is required"),
+
+]
