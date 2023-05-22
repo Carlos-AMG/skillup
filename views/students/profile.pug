@@ -28,8 +28,8 @@ block contenido
             div.mt-5
               if student.link
                 p.text-2xl.font-bold Link: 
-                  a(href= `${student.link}`)
-                    span.font-normal #{student.link}
+                  a(href= `https://${student.link}` class="font-normal")= student.link
+                    
 
             div.mt-5
               p.text-2xl.font-bold  Curriculum Vitae (CV): 
