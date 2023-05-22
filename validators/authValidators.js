@@ -2,9 +2,11 @@ import { check,validationResult } from "express-validator";
 
 export const signUpStudent = [
   check("fullName")
+    .notEmpty()
+    .withMessage("Name is required")
     .isLength({ min: 3, max: 20 }).withMessage('Name must be between 3 and 20 characters long')
-    .matches(/^(?=.*[a-zA-Z])[a-zA-Z0-9-_]{3,20}$/)
-    .withMessage('Name can only contain letters (lowercase or uppercase), numbers, underscores, and hyphens'),
+    .matches(/^(?![ .]+$)[a-zA-Z .]*$/)
+    .withMessage("That isn't a name"),
   check("email")
     .notEmpty().withMessage("Email is required")
     .isEmail().withMessage("Valid email is required"),
