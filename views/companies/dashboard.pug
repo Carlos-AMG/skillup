@@ -1,0 +1,9 @@
+extends ../layout/indexInCompanies
+
+block contenido
+    
+    input(type='hidden' id='company-id' value=companyId)
+    - console.log(companyId)
+    include ../partials/dashboardContent
+    script(src="/js/company/dashboard-script.js") 
+

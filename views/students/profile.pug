@@ -1,0 +1,45 @@
+extends ../layout/indexInStudents
+
+block contenido
+    div.flex.justify-center.items-center.h-screen
+      div.flex.flex-col.mx-auto.max-w-md
+        .py-8.px-4
+            h1.text-center.text-4xl.font-bold Student 
+              span.text-green-500 Profile
+
+            div.mt-5
+              p.text-2xl.font-bold Name: 
+                span.font-normal #{student.fullName}
+
+            div.mt-5.flex.justify-center
+              if student.profileImage
+                img(src=`api/profile-image/${student.id}` , alt="Profile picture", style="width: 200px; height: 200px;border-radius: 50%")
+              else
+                p.text-2xl.font-bold Picture: 
+                  if !student.profileImage
+                    span.font-normal No profile picture has been uploaded.
+                  else 
+                    span.font-normal Pictur already uploaded
+
+            div.mt-5
+              p.text-2xl.font-bold Education: 
+                span.font-normal #{student.education}
+
+            div.mt-5
+              if student.link
+                p.text-2xl.font-bold Link: 
+                  a(href= `https://${student.link}` class="font-normal")= student.link
+                    
+
+            div.mt-5
+              p.text-2xl.font-bold  Curriculum Vitae (CV): 
+                if student.cv
+                  a(class="font-normal" href=`api/cv/${student.id}` , target="_blank") View CV
+                else
+                    span.font-normal No CV has been uploaded.
+
+            div.mt-5
+              a(href="/students/edit-profile")
+                button(class="w-full bg-cyan-700 text-white uppercase hover:bg-cyan-800 font-bold py-3 cursor-pointer rounded-md") Edit profile
+   
+

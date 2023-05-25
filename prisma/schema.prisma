@@ -18,6 +18,9 @@ model Student {
   education         String
   profileImage      String?
   cv                String?
+  link              String?
+  interestedJobs    InterestedJobStudent[]    
+  interestedCourses InterestedCourseStudent[] 
 }
 
 model Company {
@@ -28,4 +31,68 @@ model Company {
   name        String
   address     String
   description String
+  verified    Boolean @default(false)
+  jobs        Job[]
+  courses     Course[]
+}
+
+model Job {
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  jobType          String
+  skills           String
+  modality         String
+  salary           Int
+  hoursPerWeek     Int
+  area             Area    @relation(fields: [areaId], references: [id]) 
+  areaId           String  
+  company          Company  @relation(fields: [companyId], references: [id])
+  companyId        String
+  interestedStudents  InterestedJobStudent[] 
+}
+
+model Course {
+  id               String   @id @default(uuid())
+  title            String
+  startDate        DateTime
+  endDate          DateTime
+  description      String
+  prerequisites    String?
+  modality         String
+  area             Area    @relation(fields: [areaId], references: [id]) 
+  areaId           String  
+  company          Company  @relation(fields: [companyId], references: [id])
+  companyId        String
+  interestedStudents  InterestedCourseStudent[] 
+}
+
+
+model InterestedJobStudent {
+  id       String  @id @default(uuid())
+  student  Student @relation(fields: [studentId], references: [id])
+  studentId String
+  job      Job     @relation(fields: [jobId], references: [id])
+  jobId    String
+
+  @@unique([studentId, jobId])
+}
+
+model InterestedCourseStudent {
+  id       String  @id @default(uuid())
+  student  Student @relation(fields: [studentId], references: [id])
+  studentId String
+  course   Course  @relation(fields: [courseId], references: [id])
+  courseId String
+
+  @@unique([studentId, courseId])
+}
+
+
+
+model Area {
+  id     String   @id @default(uuid())
+  name   String
+  jobs   Job[]
+  courses Course[]
 }

@@ -1,16 +1,34 @@
 import express from 'express'
-import{
-    logInStudent,
-    signUpStudent,
-    formularioOlvidePassword
-} from '../controllers/student.js'
+import{getDashboardPage,getProfilePage,getUpsPage,getOfferCards,getOfferDetails,postInterest
+    ,updateStudentProfile,getStudentCv,getStudentImage,getEditProfilePage, postDisinterest
+    ,fetchInterestedOffers} from '../controllers/student.js'
+import isAuth from '../middlewares/isAuth.js'
+import { upload } from '../middlewares/upload.js';
+import { updateStudentProfileValidator } from '../validators/authValidators.js';
 
-const router = express.Router();
+const studentRouter = express.Router();
 
+//Render
+ 
+studentRouter.get("/dashboard",isAuth,getDashboardPage);
+studentRouter.get("/profile",isAuth, getProfilePage);
+studentRouter.get("/my-ups", isAuth,getUpsPage);
+studentRouter.get("/edit-profile",isAuth,getEditProfilePage)
 
-router.get('/login',logInStudent)
-router.get('/signup',signUpStudent)
-router.get('/olvide-password',formularioOlvidePassword)
+//API
+studentRouter.get('/api/offer-cards/:offerType', getOfferCards);
+studentRouter.get('/api/offer-details/:offerType/:offerId', getOfferDetails);
 
+studentRouter.post('/api/express-interest/:offerType/:offerId', postInterest);
+studentRouter.post('/api/express-disinterest/:offerType/:offerId', postDisinterest);
 
-export default router;
+studentRouter.get('/api/interest-offers/:currentFilterJobCourse', fetchInterestedOffers);
+
+studentRouter.put('/api/edit-profile', updateStudentProfileValidator,upload.fields([
+  { name: 'profileImage', maxCount: 1 },
+  { name: 'cv', maxCount: 1 },
+]), updateStudentProfile);
+studentRouter.get('/api/profile-image/:studentId', getStudentImage);
+studentRouter.get('/api/cv/:studentId', getStudentCv);
+
+export default studentRouter;

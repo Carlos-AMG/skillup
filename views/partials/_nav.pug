@@ -1,0 +1,18 @@
+
+header(class="bg-green-500 p-4")
+    .container.mx-auto.flex.justify-between.items-center
+        h1.text-2xl.text-white.font-extrabold.text-center Skill   
+            span.font-normal Up 
+
+        if type === "Students"
+            nav(class="my-5 text-sm md:flex md:gap-3 md:items-center font-bold text-white hidden ")
+                a(href="/students/dashboard" class="px-5") Dashboard
+                a(href="/students/my-ups" class="px-5") My Ups
+                a(href="/students/profile" class="px-5") Profile 
+                a(href="" class="bg-green-700 py-2 px-10 rounded-lg ") LogOut  
+        else 
+            nav(class="my-5 text-sm md:flex md:gap-3 md:items-center font-bold text-white hidden ")
+                    a(href="/students/dashboard" class="px-5") Create Offer
+                    a(href="/students/my-ups" class="px-5") See offers 
+                    a(href="" class="bg-green-700 py-2 px-10 rounded-lg ") LogOut 
+
